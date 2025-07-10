@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="src/output.css">
+    <link rel="shortcut icon" href="src/images/logo.png" type="image/x-icon">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <title>Nlw 20 Iniciante</title>
+</head>
+<!-- como output está em src, deve seguir o caminho como se estivesse dentro de src -->
+<body class="container font-sans bg-background-black text-white bg-[url('images/bg.jpg')] bg-no-repeat bg-[100%_auto] bg-[top_center]">
+    <header class="pt-8 mt-0 mr-auto ml-auto max-w-3xs">
+        <img class="w-full" src="src/images/logo.png" alt="eSports">
+    </header>
+    <main class="mt-12 mb-12">
+        <section class="bg-gradient pt-1 rounded-[10px] animate-appear">
+            <div class="bg-background-gray pb-8 pl-8 pr-8 pt-6 rounded-lg">
+                <h1 class="-tracking-[0.47px] text-2xl font-bold">Assistente de Meta</h1>
+                <p class="-tracking-[0.18px] text-gray-text text-[16px]">Pergunte sobre estratégias, build e dicas para seus jogos!</p>
+            </div>
+        </section>
+        <form action="#" id="form" class="flex flex-wrap gap-3 mt-5 mb-5">
+
+            <input class="all-unset input flex-1 min-[300px]:flex-3" type="password" name="key" placeholder="API Key Gimini">
+            <select name="JogoSelecionado" class="all-unset input flex-1">
+                <option value="">Selecione um jogo</option>
+                <option value="valorant">Valorant</option>
+                <option value="lol">League of Legends</option>
+                <option value="csgo">CS:GO</option>
+            </select>
+
+            <input id="input-question" class="all-unset input flex-1" type="text" name="prompt" placeholder="Ex: Melhor build para..." required>
+            <button id="submit-button" class="bg-gradient-button button-submit">Perguntar</button>
+        </form>
+
+        <div id="aiResponse">
+            <div class="response-content">
+
+            </div>
+        </div>
+    </main>
+
+    <script src="src/javascript/script.js" type="module"></script>
+</body>
+</html>
