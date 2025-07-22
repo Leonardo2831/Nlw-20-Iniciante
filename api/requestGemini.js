@@ -1,8 +1,5 @@
 import Showdown from 'showdown';
-import dotenv from 'dotenv';
 import { GoogleGenerativeAI } from  '@google/generative-ai';
-
-dotenv.config();
 
 export default async function requestIA(req, res) {
     const genIA = new GoogleGenerativeAI({ apiKey: process.env.API_KEY });
@@ -25,7 +22,7 @@ export default async function requestIA(req, res) {
             const convertToHtml = convert.makeHtml(response.text());
             
             res.status(200).json({ message: convertToHtml });
-        } catch {
+        } catch(error) {
             console.error("Erro na requisição para a IA:", error);
             res.status(500).json({ error: "Erro interno do servidor" });
         }
