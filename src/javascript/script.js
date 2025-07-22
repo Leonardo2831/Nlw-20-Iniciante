@@ -10,13 +10,6 @@ const submitButton = selectItem.Single('#submit-button');
 
 const apiResponseContent = selectItem.Single('#aiResponse');
 
-async function responseGimini(response){
-    const dataGimini = await response.json();
-    const messageIA = dataGimini.message;
-
-    apiResponseContent.querySelector('.response-content').innerHTML = messageIA;
-}
-
 form.addEventListener('submit', async (event) => {
     event.preventDefault();
 
@@ -42,7 +35,10 @@ form.addEventListener('submit', async (event) => {
             }),
         });
 
-        responseGimini(response);
+        const dataGimini = await response.json();
+        const messageIA = dataGimini.message;
+
+        apiResponseContent.querySelector('.response-content').innerHTML = messageIA;
         
     } catch {
         // houve um erro, tente novamente mais tarde.
