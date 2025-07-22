@@ -5,8 +5,6 @@ import { GoogleGenerativeAI } from  '@google/generative-ai';
 dotenv.config();
 
 export default async function requestIA(req, res) {
-    const genIA = new GoogleGenerativeAI({ apiKey: process.env.API_KEY });
-    const modelFlash = genIA.getGenerativeModel({ model: 'gemini-2.0-flash'});
 
     if(req.method === 'POST'){
         const {question , contextGame} = req.body;
@@ -14,6 +12,9 @@ export default async function requestIA(req, res) {
         if(!question || !contextGame){  
             return res.status(400).json({ message: "Faltando o texto de entrada e o jogo escolhido" });
         }
+
+        const genIA = new GoogleGenerativeAI({ apiKey: process.env.API_KEY });
+        const modelFlash = genIA.getGenerativeModel({ model: 'gemini-2.0-flash'}); 
 
         try {
             let prompt = `
@@ -43,14 +44,11 @@ export default async function requestIA(req, res) {
                 Aqui está a pergunta do usuário: ${input}
 
             `;
-
-            const result = await modelFlash.generateContent(prompt);
-            const response = result.response; 
-
-            const convert = new Showdown.Converter();
-            const convertToHtml = convert.makeHtml(response.text());
             
-            res.status(200).json({ message: convertToHtml });
+            const result = await modelFlash.generateContent(prompt);
+            const response = result.response;
+
+            res.status(200).json({ message: response });
         } catch(error) {
             console.error("Erro na requisição para a IA:", error);
             res.status(500).json({ error: "Erro interno do servidor" });
