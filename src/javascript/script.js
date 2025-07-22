@@ -31,7 +31,7 @@ form.addEventListener('submit', async (event) => {
                     "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                question: inputQuestion.value,
+                input: inputQuestion.value,
                 contextGame: selectGame.value,
             }),
         });

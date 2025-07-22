@@ -6,9 +6,9 @@ dotenv.config();
 export default async function requestIA(req, res) {
     
     if(req.method === 'POST'){
-        const {question , contextGame} = req.body;
+        const {input , contextGame} = req.body;
 
-        if(!question || !contextGame){  
+        if(!input || !contextGame){  
             return res.status(400).json({ message: "Faltando o texto de entrada e o jogo escolhido" });
         }
 
@@ -40,7 +40,7 @@ export default async function requestIA(req, res) {
                 Resposta: A build mais atual é: \n\n **Itens:** \n\n coloque os itens aqui. \n\n **Runas:** \n\n exemplo de runas. \n\n
 
                 ---
-                Aqui está a pergunta do usuário: ${question}
+                Aqui está a pergunta do usuário: ${input}
 
             `;
             
