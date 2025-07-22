@@ -3,6 +3,8 @@ import Showdown from 'showdown';
 import { GoogleGenerativeAI } from  '@google/generative-ai';
 
 dotenv.config();
+console.log(process.env.API_KEY);
+
 
 export default async function requestIA(req, res) {
     const genIA = new GoogleGenerativeAI({ apiKey: process.env.API_KEY });
