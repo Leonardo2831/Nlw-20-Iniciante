@@ -3,10 +3,56 @@ import {Select} from './utility-functions.js';
 const selectItem = new Select();
 
 const inputQuestion = selectItem.Single('#input-question');
-const submitButton = selectItem.Single('#submit-button');
-const apiResponseContent = selectItem.Single('#aiResponse');
-const form = selectItem.Single('#form');
+const selectGame = selectItem.Single('#selectGame');
 
-form.addEventListener('submit', (event) => {
+const form = selectItem.Single('#form');
+const submitButton = selectItem.Single('#submit-button');
+
+const apiResponseContent = selectItem.Single('#aiResponse div');
+
+form.addEventListener('submit', async (event) => {
     event.preventDefault();
+
+    if(inputQuestion.value == '' || selectGame.value == ''){
+        alert('Preencha todos os campos!');  
+        return;
+    } 
+
+    
+    
+    submitButton.disabled = true;
+    submitButton.textContent = 'Perguntando...'
+    submitButton.classList.add('animate-loading');
+    
+    try {
+
+        const response = await fetch(, {
+            method: 'POST',
+            body: JSON.stringify({
+                input: inputQuestion.value,
+                contextGame: selectGame.value,
+            }),
+        });
+
+        console.log('ta pra funfa em front');
+        
+        const dataGimini = response.json();
+        const messageIA = dataGimini.message;
+
+        const messageIAFormated = messageIA
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                .replace(/\*(.*?)\*/g, "<em>$1</em>")
+                .replace(/\n/g, '<br>');
+
+        apiResponseContent.innerHTML = messageIAFormated;
+        console.log('funfo em front');
+        
+    } catch {
+        // houve um erro, tente novamente mais tarde.
+    } finally {
+        submitButton.disabled = false;
+        submitButton.textContent = 'Perguntar'
+        submitButton.classList.remove('animate-loading');
+    }
+
 });
