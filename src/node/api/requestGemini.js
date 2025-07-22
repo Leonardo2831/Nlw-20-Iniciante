@@ -29,5 +29,3 @@ export default async function requestIA(req, res) {
     }
 
 }
-
-main();
