@@ -5,6 +5,7 @@
     /* colocar color antes para tailwind reconhecer */
     --color-background-black: #121214;
     --color-background-gray: #2a2634;
+    --color-background-black-opacity: rgba(0, 0, 0, 0.4);
 
     --color-gray-text: #a1a1aa;
     --color-black-opacity: #000000ff;
@@ -73,5 +74,11 @@
 
     .animate-loading{
         animation: pulse 1s infinite
+    }
+
+    #aiResponse ul,
+    #aiResponse ol,
+    #aiResponse dl{
+        @apply p-6 opacity-80;
     }
 }
