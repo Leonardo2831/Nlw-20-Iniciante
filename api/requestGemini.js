@@ -47,7 +47,7 @@ export default async function requestIA(req, res) {
             const result = await modelFlash.generateContent(prompt);
             const response = result.response;
 
-            res.status(200).json({ message: response });
+            res.status(200).json({ message: response.text() });
         } catch(error) {
             console.error("Erro na requisição para a IA:", error);
             res.status(500).json({ error: "Erro interno do servidor" });
