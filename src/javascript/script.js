@@ -1,3 +1,4 @@
+import Showdown from 'showdown';
 import {Select} from './utility-functions.js';
 
 const selectItem = new Select();
@@ -8,7 +9,7 @@ const selectGame = selectItem.Single('#selectGame');
 const form = selectItem.Single('#form');
 const submitButton = selectItem.Single('#submit-button');
 
-const apiResponseContent = selectItem.Single('#aiResponse div');
+const apiResponseContent = selectItem.Single('#aiResponse');
 
 form.addEventListener('submit', async (event) => {
     event.preventDefault();
@@ -32,15 +33,14 @@ form.addEventListener('submit', async (event) => {
             }),
         });
         
-        const dataGimini = response.json();
+        const dataGimini = await response.json();
         const messageIA = dataGimini.message;
 
-        const messageIAFormated = messageIA
-                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-                .replace(/\*(.*?)\*/g, "<em>$1</em>")
-                .replace(/\n/g, '<br>');
+        // para converter texto
+        const convertText = new Showdown.Converter();
+        const convertToHtml = convertText.makeHtml(messageIA);
 
-        apiResponseContent.innerHTML = messageIAFormated;
+        apiResponseContent.querySelector('.response-content').innerHTML = messageIAFormated;
         
     } catch {
         // houve um erro, tente novamente mais tarde.
