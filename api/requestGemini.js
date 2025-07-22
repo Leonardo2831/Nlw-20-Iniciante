@@ -3,15 +3,12 @@ import Showdown from 'showdown';
 import { GoogleGenerativeAI } from  '@google/generative-ai';
 
 dotenv.config();
-console.log(process.env.API_KEY);
 
 export default async function requestIA(req, res) {
     const genIA = new GoogleGenerativeAI({ apiKey: process.env.API_KEY });
     const modelFlash = genIA.getGenerativeModel({ model: 'gemini-2.0-flash'});
 
     if(req.method === 'POST'){
-        console.log('Recebido:', req.body);
-        
         const {input , contextGame} = req.body;
 
         if(!input || !contextGame){  
@@ -33,7 +30,7 @@ export default async function requestIA(req, res) {
             res.status(500).json({ error: "Erro interno do servidor" });
         }
     } else {
-        res.setHeader('Allow', ['POST']);
+        console.log(process.env.API_KEY);
         res.status(405).end(`O método ${req.method} não é permitido`);
     }
 }
