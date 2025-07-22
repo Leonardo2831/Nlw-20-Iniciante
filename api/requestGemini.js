@@ -21,10 +21,10 @@ export default async function requestIA(req, res) {
             const result = await modelPro.generateContent(prompt);
             const response = result.response; 
 
-            // const convertText = new Showdown.Converter();
-            // const convertToHtml = convertText.makeHtml(response.text());
+            const convert = new Showdown.Converter();
+            const convertToHtml = convert.makeHtml(response.text());
             
-            res.status(200).json({ message: response });
+            res.status(200).json({ message: convertToHtml });
         } catch {
             console.error("Erro na requisição para a IA:", error);
             res.status(500).json({ error: "Erro interno do servidor" });
