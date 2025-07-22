@@ -23,7 +23,7 @@ form.addEventListener('submit', async (event) => {
     submitButton.classList.add('animate-loading');
     
     try {
-        const response = await fetch("/api/requestGemini.js", {
+        const response = await fetch("/api/requestGemini", {
             method: 'POST',
             headers: {
                     "Content-Type": "application/json",
