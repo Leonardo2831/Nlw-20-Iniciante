@@ -1,10 +1,10 @@
 import dotenv from 'dotenv';
-import { GoogleGenerativeAI } from  '@google/generative-ai';
+import { GoogleGenerativeAI } from '@google/generative-ai';
 
 dotenv.config();
 
 export default async function requestIA(req, res) {
-
+    
     if(req.method === 'POST'){
         const {question , contextGame} = req.body;
 
@@ -40,7 +40,7 @@ export default async function requestIA(req, res) {
                 Resposta: A build mais atual é: \n\n **Itens:** \n\n coloque os itens aqui. \n\n **Runas:** \n\n exemplo de runas. \n\n
 
                 ---
-                Aqui está a pergunta do usuário: ${input}
+                Aqui está a pergunta do usuário: ${question}
 
             `;
             
@@ -53,7 +53,6 @@ export default async function requestIA(req, res) {
             res.status(500).json({ error: "Erro interno do servidor" });
         }
     } else {
-        console.log(process.env.API_KEY);
         res.status(405).end(`O método ${req.method} não é permitido`);
     }
 }
