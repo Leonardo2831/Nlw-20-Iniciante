@@ -21,27 +21,29 @@
             <div class="bg-background-gray pb-8 pl-8 pr-8 pt-6 rounded-lg">
                 <h1 class="-tracking-[0.47px] text-2xl font-bold">Assistente de Meta</h1>
                 <p class="-tracking-[0.18px] text-gray-text text-[16px]">Pergunte sobre estratégias, build e dicas para seus jogos!</p>
+            
+                <form action="#" id="form" class="flex flex-wrap gap-3 mt-5">
+
+                    <input id="input-question" class="all-unset input flex-1 min-[300px]:flex-3" type="text" name="prompt" placeholder="Ex: Melhor build para...">
+
+                    <select id="selectGame" name="JogoSelecionado" class="all-unset input flex-1">
+                        <option value="">Selecione um jogo</option>
+                        <option value="valorant">Valorant</option>
+                        <option value="lol">League of Legends</option>
+                        <option value="csgo">CS:GO</option>
+                    </select>
+
+                    <button id="submit-button" class="bg-gradient-button button-submit disabled:transition-none disabled:translate-0 disabled:cursor-not-allowed disabled:shadow-none disabled:text-black-opacity">Perguntar</button>
+
+                    <div id="aiResponse">
+                        <div class="response-content">
+
+                        </div>
+                    </div>
+                </form>
             </div>
         </section>
-        <form action="#" id="form" class="flex flex-wrap gap-3 mt-5 mb-5">
 
-            <input id="input-question" class="all-unset input flex-1 min-[300px]:flex-3" type="text" name="prompt" placeholder="Ex: Melhor build para...">
-
-            <select id="selectGame" name="JogoSelecionado" class="all-unset input flex-1">
-                <option value="">Selecione um jogo</option>
-                <option value="valorant">Valorant</option>
-                <option value="lol">League of Legends</option>
-                <option value="csgo">CS:GO</option>
-            </select>
-
-            <button id="submit-button" class="bg-gradient-button button-submit disabled:transition-none disabled:translate-0 disabled:cursor-not-allowed disabled:shadow-none disabled:text-black-opacity">Perguntar</button>
-        </form>
-
-        <div id="aiResponse">
-            <div class="response-content">
-
-            </div>
-        </div>
     </main>
 
     <script src="src/javascript/script.js" type="module"></script>

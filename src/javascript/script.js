@@ -43,7 +43,8 @@ form.addEventListener('submit', async (event) => {
         
     } catch {
         // houve um erro, tente novamente mais tarde.
-        apiResponseContent.querySelector('.response-content').innerHTML = '<p class="text-gray-text text-[16px] -tracking-[0.18px]">Houve um <b>erro</b>, tente novamente mais tarde!</p>';
+        apiResponseContent.querySelector('.response-content').innerHTML = 
+            '<p class="text-gray-text text-[16px] -tracking-[0.18px] mt-5">Houve um <b class="text-[18px]">erro</b>, tente novamente mais tarde!</p>';
         
     } finally {
         submitButton.disabled = false;
