@@ -25,16 +25,16 @@
         </section>
         <form action="#" id="form" class="flex flex-wrap gap-3 mt-5 mb-5">
 
-            <input class="all-unset input flex-1 min-[300px]:flex-3" type="password" name="key" placeholder="API Key Gimini">
-            <select name="JogoSelecionado" class="all-unset input flex-1">
+            <input id="input-question" class="all-unset input flex-1 min-[300px]:flex-3" type="text" name="prompt" placeholder="Ex: Melhor build para...">
+
+            <select id="selectGame" name="JogoSelecionado" class="all-unset input flex-1">
                 <option value="">Selecione um jogo</option>
                 <option value="valorant">Valorant</option>
                 <option value="lol">League of Legends</option>
                 <option value="csgo">CS:GO</option>
             </select>
 
-            <input id="input-question" class="all-unset input flex-1" type="text" name="prompt" placeholder="Ex: Melhor build para..." required>
-            <button id="submit-button" class="bg-gradient-button button-submit">Perguntar</button>
+            <button id="submit-button" class="bg-gradient-button button-submit disabled:transition-none disabled:translate-0 disabled:cursor-not-allowed disabled:shadow-none disabled:text-black-opacity">Perguntar</button>
         </form>
 
         <div id="aiResponse">
