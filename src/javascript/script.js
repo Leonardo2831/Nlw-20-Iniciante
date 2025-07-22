@@ -32,13 +32,10 @@ form.addEventListener('submit', async (event) => {
             }),
         });
         
-        const [dataGimini, ] = await response.json();
+        const dataGimini = await response.json();
         const messageIA = dataGimini.message;
 
-        // para converter texto
-        
-
-        apiResponseContent.querySelector('.response-content').innerHTML = convertToHtml;
+        apiResponseContent.querySelector('.response-content').innerHTML = messageIA;
         
     } catch {
         // houve um erro, tente novamente mais tarde.
