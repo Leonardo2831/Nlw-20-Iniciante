@@ -23,7 +23,6 @@ form.addEventListener('submit', async (event) => {
     submitButton.classList.add('animate-loading');
     
     try {
-
         const response = await fetch("https://nlw-20-iniciante-three.vercel.app/api/requestGemini.js", {
             method: 'POST',
             headers: {
