@@ -10,6 +10,13 @@ const submitButton = selectItem.Single('#submit-button');
 
 const apiResponseContent = selectItem.Single('#aiResponse');
 
+async function responseGimini(response){
+    const dataGimini = await response.json();
+    const messageIA = dataGimini.message;
+
+    apiResponseContent.querySelector('.response-content').innerHTML = messageIA;
+}
+
 form.addEventListener('submit', async (event) => {
     event.preventDefault();
 
@@ -31,14 +38,12 @@ form.addEventListener('submit', async (event) => {
                 contextGame: selectGame.value,
             }),
         });
-        
-        const dataGimini = await response.json();
-        const messageIA = dataGimini.message;
 
-        apiResponseContent.querySelector('.response-content').innerHTML = messageIA;
+        responseGimini(response);
         
     } catch {
         // houve um erro, tente novamente mais tarde.
+        apiResponseContent.querySelector('.response-content').innerHTML = '<p class="text-gray-text text-[16px] -tracking-[0.18px]">Houve um <b>erro</b>, tente novamente mais tarde!</p>';
         
     } finally {
         submitButton.disabled = false;
