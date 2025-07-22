@@ -18,23 +18,19 @@ form.addEventListener('submit', async (event) => {
         return;
     } 
 
-    
-    
     submitButton.disabled = true;
     submitButton.textContent = 'Perguntando...'
     submitButton.classList.add('animate-loading');
     
     try {
 
-        const response = await fetch(, {
+        const response = await fetch("https://nlw-20-iniciante-three.vercel.app/api/requestGimini.js", {
             method: 'POST',
             body: JSON.stringify({
                 input: inputQuestion.value,
                 contextGame: selectGame.value,
             }),
         });
-
-        console.log('ta pra funfa em front');
         
         const dataGimini = response.json();
         const messageIA = dataGimini.message;
@@ -45,10 +41,10 @@ form.addEventListener('submit', async (event) => {
                 .replace(/\n/g, '<br>');
 
         apiResponseContent.innerHTML = messageIAFormated;
-        console.log('funfo em front');
         
     } catch {
         // houve um erro, tente novamente mais tarde.
+        
     } finally {
         submitButton.disabled = false;
         submitButton.textContent = 'Perguntar'
