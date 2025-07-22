@@ -40,7 +40,7 @@ form.addEventListener('submit', async (event) => {
         const convertText = new Showdown.Converter();
         const convertToHtml = convertText.makeHtml(messageIA);
 
-        apiResponseContent.querySelector('.response-content').innerHTML = messageIAFormated;
+        apiResponseContent.querySelector('.response-content').innerHTML = convertToHtml;
         
     } catch {
         // houve um erro, tente novamente mais tarde.
