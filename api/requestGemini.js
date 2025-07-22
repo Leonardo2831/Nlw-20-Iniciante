@@ -6,6 +6,8 @@ export default async function requestIA(req, res) {
     const modelPro = genIA.getGenerativeModel({ model: 'gemini-2.5-flash'});
 
     if(req.method === 'POST'){
+        console.log('Recebido:', req.body);
+        
         const {input , contextGame} = req.body;
 
         if(!input || !contextGame){  
