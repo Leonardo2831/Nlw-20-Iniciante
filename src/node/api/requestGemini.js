@@ -11,6 +11,10 @@ export default async function requestIA(req, res) {
     if(req.method === 'POST'){
         const {input , contextGame} = req.body;
 
+        if(!input || !contextGame){  
+            return res.status(400).json({ message: "Faltando o texto de entrada e o jogo escolhido" });
+        }
+
         try {
             const prompt = `Olha, tenho esse jogo ${contextGame} e queria saber sobre ${input}`;
 
