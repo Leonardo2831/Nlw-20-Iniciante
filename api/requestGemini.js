@@ -5,10 +5,9 @@ import { GoogleGenerativeAI } from  '@google/generative-ai';
 dotenv.config();
 console.log(process.env.API_KEY);
 
-
 export default async function requestIA(req, res) {
     const genIA = new GoogleGenerativeAI({ apiKey: process.env.API_KEY });
-    const modelPro = genIA.getGenerativeModel({ model: 'gemini-2.5-flash'});
+    const modelFlash = genIA.getGenerativeModel({ model: 'gemini-2.0-flash'});
 
     if(req.method === 'POST'){
         console.log('Recebido:', req.body);
@@ -22,7 +21,7 @@ export default async function requestIA(req, res) {
         try {
             const prompt = `Olha, tenho esse jogo ${contextGame} e queria saber sobre ${input}`;
 
-            const result = await modelPro.generateContent(prompt);
+            const result = await modelFlash.generateContent(prompt);
             const response = result.response; 
 
             const convert = new Showdown.Converter();
