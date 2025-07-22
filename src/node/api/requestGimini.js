@@ -13,7 +13,7 @@ export default async function requestIA(req, res) {
     const {input , contextGame} = req.body;
 
     try {
-        const prompt = `Olha, tenho esse jogo ${contextGame} e queria saber sobre ${input.value}`;
+        const prompt = `Olha, tenho esse jogo ${contextGame} e queria saber sobre ${input}`;
 
         const result = await modelPro.generateContent(prompt);
         const response = result.response; 
