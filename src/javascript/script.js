@@ -31,7 +31,7 @@ form.addEventListener('submit', async (event) => {
     
     try {
 
-        const response = await fetch("https://nlw-20-iniciante-three.vercel.app/api/requestGemini.js", {
+        const response = await fetch("https://nlw-20-iniciante-three.vercel.app/api/requestGimini.js", {
             method: 'POST',
             body: JSON.stringify({
                 input: inputQuestion.value,
