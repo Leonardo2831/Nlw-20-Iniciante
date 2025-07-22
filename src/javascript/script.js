@@ -13,6 +13,8 @@ const apiResponseContent = selectItem.Single('#aiResponse');
 form.addEventListener('submit', async (event) => {
     event.preventDefault();
 
+    apiResponseContent.classList.add('hidden');
+
     if(inputQuestion.value == '' || selectGame.value == ''){
         alert('Preencha todos os campos!');  
         return;
@@ -34,6 +36,7 @@ form.addEventListener('submit', async (event) => {
             }),
         });
 
+        
         const dataGimini = await response.json();
         const messageIA = dataGimini.message;
 
@@ -42,9 +45,11 @@ form.addEventListener('submit', async (event) => {
     } catch {
         // houve um erro, tente novamente mais tarde.
         apiResponseContent.querySelector('.response-content').innerHTML = 
-            '<p class="text-gray-text text-[16px] -tracking-[0.18px] mt-5">Houve um <b class="text-[18px]">erro</b>, tente novamente mais tarde!</p>';
+            '<p>Houve um <b class="text-[18px]">erro</b>, tente novamente mais tarde!</p>';
         
     } finally {
+        apiResponseContent.classList.remove('hidden');
+
         submitButton.disabled = false;
         submitButton.textContent = 'Perguntar'
         submitButton.classList.remove('animate-loading');
