@@ -1,4 +1,3 @@
-import Showdown from 'showdown';
 import {Select} from './utility-functions.js';
 
 const selectItem = new Select();

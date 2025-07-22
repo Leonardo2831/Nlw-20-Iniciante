@@ -1,5 +1,4 @@
 import dotenv from 'dotenv';
-import Showdown from 'showdown';
 import { GoogleGenerativeAI } from  '@google/generative-ai';
 
 dotenv.config();
