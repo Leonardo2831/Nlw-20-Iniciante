@@ -1,3 +1,4 @@
+import Showdown from 'showdown';
 import {Select} from './utility-functions.js';
 
 const selectItem = new Select();
@@ -40,7 +41,10 @@ form.addEventListener('submit', async (event) => {
         const dataGimini = await response.json();
         const messageIA = dataGimini.message;
 
-        apiResponseContent.querySelector('.response-content').innerHTML = messageIA;
+        const convert = new showdown.Converter();
+        const convertHtml = convert.makeHtml(messageIA);
+
+        apiResponseContent.querySelector('.response-content').innerHTML = convertHtml;
         
     } catch {
         // houve um erro, tente novamente mais tarde.
