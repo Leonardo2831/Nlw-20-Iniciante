@@ -16,7 +16,7 @@ export default async function requestIA(req, res) {
         }
 
         try {
-            const prompt = `
+            let prompt = `
                 ## Especialidade
                 Você é um especialista assistente em informações e meta para o jogo ${contextGame}.
 
