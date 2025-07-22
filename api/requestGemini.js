@@ -1,5 +1,8 @@
+import dotenv from 'dotenv';
 import Showdown from 'showdown';
 import { GoogleGenerativeAI } from  '@google/generative-ai';
+
+dotenv.config();
 
 export default async function requestIA(req, res) {
     const genIA = new GoogleGenerativeAI({ apiKey: process.env.API_KEY });

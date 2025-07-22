@@ -5,6 +5,7 @@
   "dependencies": {
     "@google/generative-ai": "^0.24.1",
     "@tailwindcss/cli": "^4.1.11",
+    "dotenv": "^17.2.0",
     "showdown": "^2.1.0",
     "tailwindcss": "^4.1.11"
   }
