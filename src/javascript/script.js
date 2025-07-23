@@ -35,7 +35,6 @@ form.addEventListener('submit', async (event) => {
                 contextGame: selectGame.value,
             }),
         });
-
         
         const dataGimini = await response.json();
         const messageIA = dataGimini.message;
