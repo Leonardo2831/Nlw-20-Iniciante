@@ -35,9 +35,16 @@ form.addEventListener('submit', async (event) => {
                 contextGame: selectGame.value,
             }),
         });
+
+        console.log(response);
+        
         
         const dataGimini = await response.json();
         const messageIA = dataGimini.message;
+
+        console.log(dataGimini);
+        console.log(messageIA);
+        
 
         const convert = new showdown.Converter();
         const convertHtml = convert.makeHtml(messageIA);
