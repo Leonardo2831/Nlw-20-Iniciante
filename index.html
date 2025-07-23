@@ -26,11 +26,11 @@
 
                     <input id="input-question" class="all-unset input flex-1 min-[300px]:flex-2" type="text" name="prompt" placeholder="Ex: Melhor build para...">
 
-                    <button type="button" id="selectGame" name="JogoSelecionado" class="all-unset input flex-1 cursor-pointer">Selecione um jogo</button>
+                    <button type="button" id="selectGame" name="JogoSelecionado" class="all-unset input flex-1 cursor-pointer" value="valorant">Selecione um jogo</button>
 
                     <button type="submit" id="submit-button" class="bg-gradient-button button-submit disabled:transition-none disabled:translate-0 disabled:cursor-not-allowed disabled:shadow-none disabled:text-black-opacity">Perguntar</button>
 
-                    <div id="aiResponse" class="hidden min-w-full bg-background-black-opacity text-white rounded-lg p-5 border-l-4 border-gradient-2 mt-5">
+                    <div id="aiResponse" class="hidden min-w-full bg-background-black-opacity-response text-white rounded-lg p-5 border-l-4 border-gradient-2 mt-5">
                         <div class="response-content">
 
                         </div>
@@ -39,9 +39,17 @@
             </div>
         </section>
 
-        <div id="choiceGame" class="hidden absolute top-1/2 left-1/2 -translate-1/2 overflow-x-auto max-w-[768px] w-[80%] h-[80%] bg-background-black-opacity p-5 rounded-lg">
-            
-        </div>
+        <section id="choiceGame" class="absolute top-1/2 left-1/2 -translate-1/2 max-w-[768px] w-[80%] h-[80%] bg-background-black-opacity rounded-lg flex-col justify-between items-center gap-8 p-6">
+            <div>
+                <h2 class="text-4xl text-center font-[600] tracking-[1px] mb-6">Opções de Jogos</h2>
+                <picture class="w-full max-w-[500px] overflow-x-auto">
+                    
+                </picture>
+            </div>
+            <p class="text-center text-base text-gray-text justify-end">
+                Dados e imagem por <a href="https://rawg.io" target="_blank" rel="noopener noreferrer" class="font-[500]">RAWG.io</a>
+            </p>
+        </section>
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/showdown@2.1.0/dist/showdown.min.js"></script>
