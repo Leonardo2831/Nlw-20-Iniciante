@@ -57,7 +57,7 @@ export default async function requestGemini(req, res){
         const result = await modelFlash.generateContent(prompt);
         const response = result.response;
         console.log(response);
-        return res.status(200).json({ message: response });
+        return res.status(200).json({ message: response.text() });
     } catch (error) {
         console.log('entro no catch');
 
