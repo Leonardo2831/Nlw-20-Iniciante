@@ -3,56 +3,59 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 
 dotenv.config();
 
-export default async function requestIA(req, res) {
-    
-    if(req.method === 'POST'){
-        const {input , contextGame} = req.body;
+export default async function requestGemini(req, res){
+    if (req.method !== 'POST') {
+        return res.status(405).end(`O método ${req.method} não é permitido`);
+    }
 
-        if(!input || !contextGame){  
-            return res.status(400).json({ message: "Faltando o texto de entrada e o jogo escolhido" });
-        }
+    const { input, contextGame } = req.body;
 
-        const genIA = new GoogleGenerativeAI({ apiKey: process.env.API_KEY });
-        const modelFlash = genIA.getGenerativeModel({ model: 'gemini-2.0-flash'}); 
+    if (!input || !contextGame) {
+        return res.status(400).json({ message: "Faltando o texto de entrada e/ou o jogo escolhido" });
+    }
 
-        try {
-            let prompt = `
-                ## Especialidade
-                Você é um especialista assistente em informações e meta para o jogo ${contextGame}.
+    try {
+        const genAI = new GoogleGenerativeAI({ apiKey: process.env.API_KEY });
+        const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
 
-                ## Tarefa
-                Você deve responder as perguntas do usuário com base no seu conhecimento do jogo, estratégias, builds e dicas.
+        const prompt = `
+            ## Especialidade
+            Você é um especialista assistente em informações e meta para o jogo ${contextGame}.
 
-                ## Regras 
-                - Se você não sabe a resposta, responda com "Não sei" e não tente inventar uma resposta.
-                - Se a pergunta não está relacionada ao jogo, responda com "Essa pergunta não está relacionada ao jogo".
-                - Considere a data atual ${new Date().toLocaleDateString()}.
-                - Faça pesquisas atualizadas sobre o patch atual baseada na data atual para dar uma resposta coerente.
-                - Nunca responda itens que não tenha certeza que não exista no patch atual ou anteriores do jogo ${contextGame}.
+            ## Tarefa
+            Você deve responder as perguntas do usuário com base no seu conhecimento do jogo, estratégias, builds e dicas.
 
-                ## Resposta
-                - Economize na resposta, seja direto e responda em no máximo 500 caracteres. 
-                - Responda em markdown.
-                - Não precisa fazer nenhuma saudação ou despedida, apenas responda o que o usuário está querendo, lembre de ser direto.
+            ## Regras
+            - Se você não sabe a resposta, responda com "Não sei" e não tente inventar uma resposta.
+            - Se a pergunta não está relacionada ao jogo, responda com "Essa pergunta não está relacionada ao jogo".
+            - Considere a data atual ${new Date().toLocaleDateString()}.
+            - Faça pesquisas atualizadas sobre o patch atual baseada na data atual para dar uma resposta coerente.
+            - Nunca responda itens que não tenha certeza que existam no patch atual ou anteriores do jogo ${contextGame}.
 
-                ## Exemplo de resposta
-                Pergunta do usuário: melhor build para rengar jungle
-                Resposta: A build mais atual é: \n\n **Itens:** \n\n coloque os itens aqui. \n\n **Runas:** \n\n exemplo de runas. \n\n
+            ## Resposta
+            - Economize na resposta, seja direto e responda em no máximo 500 caracteres.
+            - Responda em markdown.
+            - Não precisa fazer nenhuma saudação ou despedida, apenas responda o que o usuário está querendo, lembre-se de ser direto.
 
-                ---
-                Aqui está a pergunta do usuário: ${input}
+            ## Exemplo de resposta
+            Pergunta do usuário: melhor build para Rengar jungle
+            Resposta: A build mais atual é:
 
+            **Itens:** Glaive Sombria, Eclipse, Dança da Morte.  
+            **Runas:** Eletrocutar, Impacto Repentino, Globos Oculares, Caça Incansável.
+
+            ---
+
+            Aqui está a pergunta do usuário: ${input}
             `;
-            
-            const result = await modelFlash.generateContent(prompt);
-            const response = result.response;
 
-            res.status(200).json({ message: response.text() });
-        } catch(error) {
-            console.error("Erro na requisição para a IA:", error);
-            res.status(500).json({ error: "Erro interno do servidor" });
-        }
-    } else {
-        res.status(405).end(`O método ${req.method} não é permitido`);
+        const result = await model.generateContent(prompt);
+        const response = result.response.text();
+
+        return res.status(200).json({ message: response });
+
+    } catch (error) {
+        console.error("Erro na requisição para a IA:", error);
+        return res.status(500).json({ error: "Erro interno do servidor" });
     }
 }
