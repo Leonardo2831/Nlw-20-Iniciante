@@ -24,16 +24,11 @@
             
                 <form action="#" id="form" class="flex flex-wrap gap-3 mt-5">
 
-                    <input id="input-question" class="all-unset input flex-1 min-[300px]:flex-3" type="text" name="prompt" placeholder="Ex: Melhor build para...">
+                    <input id="input-question" class="all-unset input flex-1 min-[300px]:flex-2" type="text" name="prompt" placeholder="Ex: Melhor build para...">
 
-                    <select id="selectGame" name="JogoSelecionado" class="all-unset input flex-1">
-                        <option value="">Selecione um jogo</option>
-                        <option value="valorant">Valorant</option>
-                        <option value="lol">League of Legends</option>
-                        <option value="csgo">CS:GO</option>
-                    </select>
+                    <button type="button" id="selectGame" name="JogoSelecionado" class="all-unset input flex-1 cursor-pointer">Selecione um jogo</button>
 
-                    <button id="submit-button" class="bg-gradient-button button-submit disabled:transition-none disabled:translate-0 disabled:cursor-not-allowed disabled:shadow-none disabled:text-black-opacity">Perguntar</button>
+                    <button type="submit" id="submit-button" class="bg-gradient-button button-submit disabled:transition-none disabled:translate-0 disabled:cursor-not-allowed disabled:shadow-none disabled:text-black-opacity">Perguntar</button>
 
                     <div id="aiResponse" class="hidden min-w-full bg-background-black-opacity text-white rounded-lg p-5 border-l-4 border-gradient-2 mt-5">
                         <div class="response-content">
@@ -44,9 +39,13 @@
             </div>
         </section>
 
+        <div id="choiceGame" class="hidden absolute top-1/2 left-1/2 -translate-1/2 overflow-x-auto max-w-[768px] w-[80%] h-[80%] bg-background-black-opacity p-5 rounded-lg">
+            
+        </div>
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/showdown@2.1.0/dist/showdown.min.js"></script>
     <script src="src/javascript/script.js" type="module"></script>
+    <script type="module" src="src/javascript/gamesChoice.js"></script>
 </body>
 </html>
