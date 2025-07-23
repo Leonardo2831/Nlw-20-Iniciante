@@ -5,7 +5,8 @@
     /* colocar color antes para tailwind reconhecer */
     --color-background-black: #121214;
     --color-background-gray: #2a2634;
-    --color-background-black-opacity: rgba(0, 0, 0, 0.5);
+    --color-background-black-opacity: rgba(0, 0, 0, 0.7);
+    --color-background-black-opacity-response: rgba(0, 0, 0, 0.4);
 
     --color-gray-text: #a1a1aa;
     --color-black-opacity: #000000ff;
