@@ -12,7 +12,7 @@
     <title>Nlw 20 Iniciante</title>
 </head>
 <!-- como output está em src, deve seguir o caminho como se estivesse dentro de src -->
-<body class="container font-sans bg-background-black text-white bg-[url('images/bg.jpg')] bg-no-repeat bg-[100%_auto] bg-[top_center]">
+<body class="min-h-screen container font-sans bg-background-black text-white bg-[url('images/bg.jpg')] bg-no-repeat bg-[100%_auto] bg-[top_center]">
     <header class="pt-8 mt-0 mr-auto ml-auto max-w-3xs">
         <img class="w-full" src="src/images/logo.png" alt="eSports">
     </header>
@@ -24,7 +24,7 @@
             
                 <form action="#" id="form" class="flex flex-wrap gap-3 mt-5">
 
-                    <input id="input-question" class="all-unset input flex-1 min-[300px]:flex-2" type="text" name="prompt" placeholder="Ex: Melhor build para...">
+                    <input id="input-question" class="input flex-1 min-[300px]:flex-2" type="text" name="prompt" placeholder="Ex: Melhor build para...">
 
                     <button type="button" id="selectGame" name="JogoSelecionado" class="all-unset input flex-1 cursor-pointer" value="valorant">Selecione um jogo</button>
 
@@ -39,16 +39,49 @@
             </div>
         </section>
 
-        <section id="choiceGame" class="hidden absolute top-1/2 left-1/2 -translate-1/2 max-w-[768px] w-[80%] h-[80%] bg-background-black-opacity rounded-lg flex-col justify-between items-center gap-8 p-8">
-            <div>
-                <h2 class="text-4xl text-center font-[600] tracking-[1px] mb-6">Opções de Jogos</h2>
-                <picture id="optionGamesContent" class="w-full max-w-[500px] overflow-x-auto">
-                    <h1 class="animate-bounce text-3xl text-center font-[600] text-gray-text">Carregando...</h1>
-                </picture>
-            </div>
-            <p class="text-center text-base text-gray-text justify-end">
-                Dados e imagem por <a href="https://rawg.io" target="_blank" rel="noopener noreferrer" class="font-[500]">RAWG.io</a>
-            </p>
+
+        <section id="choiceGame" class="hidden absolute top-1/2 left-1/2 -translate-1/2 max-w-[768px] w-[80%] h-fit bg-gradient pt-1 rounded-[10px] shadow-[0_1px_3px_rgba(0,0,0,0.1)] animate-appear">
+            <section class="bg-background-gray rounded-lg px-12 py-12 w-full h-fit">
+                <div class="relative w-full h-full">
+                    <h2 class="text-4xl text-center font-[600] tracking-[1px] mb-12">Opções de Jogos</h2>
+                    <picture>
+                        <figure class="relative flex items-center">
+                            <img class="w-7 h-7 absolute left-[18px]" src="src/images/search-icon.svg" alt="Pesquisar">
+                            <input class="input flex-1 !pl-[60px]" type="text" id="filterGames" placeholder="Pesquise o jogo que deseja">
+                        </figure>
+                        <ul id="optionGamesContent" >
+                            <div class="list-games">
+                                <li class="flex-1 cursor-pointer">
+                                Counter Strike
+                                </li>
+                                <li class="flex-1 cursor-pointer">
+                                    Counter Strike
+                                </li>
+                                <li class="flex-1 cursor-pointer">
+                                    Counter Strike
+                                </li>
+                                <li class="flex-1 cursor-pointer">
+                                    Counter Strike
+                                </li>
+                                <li class="flex-1 cursor-pointer">
+                                    Counter Strike
+                                </li>
+                            </div>
+                        </ul>
+                        <ul class="list-pages">
+                            <li>1</li>
+                            <li>2</li>
+                            <li>3</li>
+                        </ul>
+                    </picture>
+                    <h1 id="textLoading" class="animate-loading-text absolute top-1/2 left-1/2 -translate-1/2 text-3xl text-center font-[600] text-gray-text">
+                        <span>Carregando</span>
+                        <span>.</span>
+                        <span>.</span>
+                        <span>.</span>
+                    </h1>
+                </div>
+            </section>
         </section>
     </main>
 
