@@ -8,73 +8,73 @@ const contentGames = selectItem.Single('#choiceGame');
 const classHidden = 'hidden';
 const classFlex = 'flex';
 
-window.addEventListener('click', ({target}) => {
-    
-    if(!contentGames.contains(target)){
-        contentGames.classList.add(classHidden);
-        contentGames.classList.remove(classFlex);
-    }
-                
-}); 
-
 function filterGames(){
 
 }
 
 const contentOptionGames = selectItem.Single('#optionGamesContent');
+const contentListPages = selectItem.Single('#listPages');
+
+let countPages = 0;
+let countGames = 0;
 
 function showGames(games){
-    const contentListPages = selectItem.Single('#listPages');
+    const height = window.innerHeight;
 
-    for(const game of games){
-        let countPages = 1;
-        let countItems = 0;
-        const height = window.innerHeight;
-        console.log(height, games, game);
-
+    games.forEach((game, index) => {
         if(height < 768){
+            if(countPages === 0 || countGames % 3 === 0){
+                countPages++;
 
-            if(countPages % 3 === 0 || countPages === 1){
                 contentOptionGames.innerHTML += `
-                      <div id="${countPages}" class="list-games animation-fadeIn">
-                            <li>${game.name}</li>
-                      </div>  
+                    <div id="${countPages}" class="list-games animation-fadeIn hidden">
+                        <li>${game}</li>
+                    </div>  
                 `;
 
                 contentListPages.innerHTML += `<li>${countPages}</li>`;
-
-                countPages++;
             } else {
-                contentOptionGames.innerHTML += `
-                    <li>${game.name}</li>
+                contentOptionGames.children[countPages - 1].innerHTML += `
+                    <li>${game}</li>
                 `;
             }
-            
         } else {
+            if(countPages === 0 || countGames % 5 === 0){
+                countPages++;
 
-            if(countPages % 5 === 0 || countPages === 1){
                 contentOptionGames.innerHTML += `
-                      <div id="${countPages}" class="list-games animation-fadeIn">
-                            <li>${game.name}</li>
-                      </div>  
+                    <div id="${countPages}" class="list-games animation-fadeIn hidden">
+                        <li value="${game}">${game}</li>
+                    </div>  
                 `;
 
                 contentListPages.innerHTML += `<li>${countPages}</li>`;
-
-                countPages++;
             } else {
-                contentOptionGames.innerHTML += `
-                    <li>${game.name}</li>
+                contentOptionGames.children[countPages - 1].innerHTML += `
+                    <li value="${game}">${game}</li>
                 `;
             }
-
         }
 
-        countItems++;
-    }
+        if(games.length - 1 === index){
+            contentListPages.innerHTML += `<li onclick="requestGames()" id="morePages" class=" pb-3 tracking-[2px]">...</li>`;
+        }
+            
+        countGames++;
+    });
+
+    contentOptionGames.children[0].classList.remove(classHidden);
 }
 
-async function requestGames(){
+// window para definir globalmente e usar no html
+window.requestGames = () => {
+    const morePages = selectItem.Single('#morePages') || null;
+
+    if(morePages){
+        morePages.textContent = '';
+        morePages.classList.add('loadingPages');
+    }
+
     const contentItemsSteam = selectItem.Single('#contentItemsSteam');
     const textLoading = selectItem.Single('#textLoading');
     textLoading.classList.remove(classHidden);
@@ -82,22 +82,35 @@ async function requestGames(){
     try {
         // const response = await fetch('https://nlw-20-iniciante-three.vercel.app/api/requestGames');
         // const games = await response.json();
-        let games = ['Counter', 'Overcooked', 'Fortnite', 'Remnant from the ashes', 'Remnant II'];
+        let games = ['Counter', 'Overcooked', 'Fortnite', 'Remnant from the ashes', 'Remnant II', 'God of War', 'Counter', 'Overcooked', 'Fortnite'];
         
+        if(morePages) morePages.remove();
         showGames(games);
-    } catch {
+    } catch(error) {
         contentOptionGames.innerHTML = `
             <div class="list-games animation-fadeIn">
                 <li>Houve um <b>erro</b>, tente novamente mais tarde!</li>
             </div>
-        `;
+        `;   
+
+        console.error(error);
     } finally {
         textLoading.classList.add(classHidden);
         contentItemsSteam.classList.remove(classHidden);
+        if(morePages) morePages.remove();
     }
 }
 
 requestGames();
+
+window.addEventListener('click', ({target}) => {
+
+    if(!contentGames.contains(target) && contentListPages.contains(target)){
+        contentGames.classList.add(classHidden);
+        contentGames.classList.remove(classFlex);
+    }
+                
+}); 
 
 selectGame.addEventListener('click', (event) => {
     event.stopPropagation();
