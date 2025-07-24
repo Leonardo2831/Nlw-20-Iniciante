@@ -121,9 +121,9 @@
     }
 
     .list-pages{
-        @apply mt-5 flex items-center justify-center gap-4 text-base 
+        @apply mt-5 flex items-center justify-center gap-4 
         *:flex *:items-center *:justify-center *:bg-background-black-opacity-response *:text-gray-text *:font-medium *:rounded-lg 
-        *:p-1 *:w-8 *:h-8 *:cursor-pointer *:hover:bg-background-gray-hover *:transition-all;
+        *:p-1 *:w-9 *:h-9 *:cursor-pointer *:hover:bg-background-gray-hover *:transition-all;
     }
 
     .animation-fadeIn{
