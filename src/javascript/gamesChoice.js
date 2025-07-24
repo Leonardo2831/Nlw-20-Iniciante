@@ -17,69 +17,83 @@ window.addEventListener('click', ({target}) => {
                 
 }); 
 
-// async function requestGames(){
-//     const contentOptionGames = selectItem.Single('#optionGamesContent');
-
-//     let url = `https://api.rawg.io/api/games?key=${API_KEY_GAMES}&page_size=5`;
-
-//     try {
-//         const resposta = await fetch(url);
-
-//         if (!resposta.ok) {
-//             throw new Error(`Erro na página ${pagina}: ${resposta.status}`);
-//         }
-
-//         const data = await resposta.json();
-//         console.log(data);
-//         contentOptionGames.innerHTML = '';
-        
-//         for(const game of data.results){
-//             console.log(game);
-            
-//             const imageGame = game.background_image;
-//             const nameGame = game.name;
-//             console.log(imageGame, nameGame);
-            
-
-//             contentOptionGames.innerHTML += `
-//                 <img src="${imageGame}" alt="${nameGame}" class="w-[230px] object-cover rounded-lg box-shadow[0_1px_2px_rgba(0_0_0_0.3)]"></img>
-//             `;
-
-//             console.log(contentOptionGames);
-            
-//         }
-
-//     } catch (error) {
-//         console.log('Ocorreu um erro ' + error);        
-//     }
-// }
-
-// requestGames();
-
 function filterGames(){
 
 }
 
+const contentOptionGames = selectItem.Single('#optionGamesContent');
+
 function showGames(games){
-    const contentOptionGames = selectItem.Single('#optionGamesContent');
+    const contentListPages = selectItem.Single('#listPages');
 
     for(const game of games){
-        contentOptionGames.innerHTML += `
-            <li>${game.name}</li>
-        `;
+        let countPages = 1;
+        let countItems = 0;
+        const height = window.innerHeight;
+        console.log(height, games, game);
+
+        if(height < 768){
+
+            if(countPages % 3 === 0 || countPages === 1){
+                contentOptionGames.innerHTML += `
+                      <div id="${countPages}" class="list-games animation-fadeIn">
+                            <li>${game.name}</li>
+                      </div>  
+                `;
+
+                contentListPages.innerHTML += `<li>${countPages}</li>`;
+
+                countPages++;
+            } else {
+                contentOptionGames.innerHTML += `
+                    <li>${game.name}</li>
+                `;
+            }
+            
+        } else {
+
+            if(countPages % 5 === 0 || countPages === 1){
+                contentOptionGames.innerHTML += `
+                      <div id="${countPages}" class="list-games animation-fadeIn">
+                            <li>${game.name}</li>
+                      </div>  
+                `;
+
+                contentListPages.innerHTML += `<li>${countPages}</li>`;
+
+                countPages++;
+            } else {
+                contentOptionGames.innerHTML += `
+                    <li>${game.name}</li>
+                `;
+            }
+
+        }
+
+        countItems++;
     }
 }
 
 async function requestGames(){
+    const contentItemsSteam = selectItem.Single('#contentItemsSteam');
+    const textLoading = selectItem.Single('#textLoading');
+    textLoading.classList.remove(classHidden);
+
     try {
-        const response = await fetch('https://nlw-20-iniciante-three.vercel.app/api/requestGames');
-        const games = await response.json();
+        // const response = await fetch('https://nlw-20-iniciante-three.vercel.app/api/requestGames');
+        // const games = await response.json();
+        let games = ['Counter', 'Overcooked', 'Fortnite', 'Remnant from the ashes', 'Remnant II'];
         
         showGames(games);
     } catch {
-
+        contentOptionGames.innerHTML = `
+            <div class="list-games animation-fadeIn">
+                <li>Houve um <b>erro</b>, tente novamente mais tarde!</li>
+            </div>
+        `;
     } finally {
-
+        textLoading.classList.add(classHidden);
+        contentItemsSteam.classList.remove(classHidden);
     }
 }
 
@@ -90,5 +104,3 @@ selectGame.addEventListener('click', (event) => {
     contentGames.classList.remove(classHidden);
     contentGames.classList.add(classFlex);
 });
-
-// Acima de 768 colocar 5 itens, abaixo, colocar 3
