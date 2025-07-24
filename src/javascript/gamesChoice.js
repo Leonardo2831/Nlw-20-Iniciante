@@ -57,7 +57,13 @@ function showGames(games){
         }
 
         if(games.length - 1 === index){
-            contentListPages.innerHTML += `<li onclick="requestGames()" id="morePages" class=" pb-3 tracking-[2px]">...</li>`;
+            contentListPages.innerHTML += `
+                <li onclick="requestGames()" id="morePages" class="flex items-center justify-center gap-1 text-center">
+                    <div class="w-1 h-1 rounded-full bg-gray-text"></div>
+                    <div class="w-1 h-1 rounded-full bg-gray-text"></div>
+                    <div class="w-1 h-1 rounded-full bg-gray-text"></div>
+                </li>
+            `;
         }
             
         countGames++;
@@ -105,7 +111,7 @@ requestGames();
 
 window.addEventListener('click', ({target}) => {
 
-    if(!contentGames.contains(target) && contentListPages.contains(target)){
+    if(!contentGames.contains(target) || contentListPages.contains(target)){
         contentGames.classList.add(classHidden);
         contentGames.classList.remove(classFlex);
     }
