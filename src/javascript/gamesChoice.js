@@ -56,12 +56,31 @@ window.addEventListener('click', ({target}) => {
 
 // requestGames();
 
-async function requestGames(){
-    const response = await fetch('https://nlw-20-iniciante-three.vercel.app/api/requestGames');
-    const games = await response.json();
+function filterGames(){
 
-    console.log(games);
-    
+}
+
+function showGames(games){
+    const contentOptionGames = selectItem.Single('#optionGamesContent');
+
+    for(const game of games){
+        contentOptionGames.innerHTML += `
+            <li>${game.name}</li>
+        `;
+    }
+}
+
+async function requestGames(){
+    try {
+        const response = await fetch('https://nlw-20-iniciante-three.vercel.app/api/requestGames');
+        const games = await response.json();
+        
+        showGames(games);
+    } catch {
+
+    } finally {
+
+    }
 }
 
 requestGames();
@@ -71,3 +90,5 @@ selectGame.addEventListener('click', (event) => {
     contentGames.classList.remove(classHidden);
     contentGames.classList.add(classFlex);
 });
+
+// Acima de 768 colocar 5 itens, abaixo, colocar 3
