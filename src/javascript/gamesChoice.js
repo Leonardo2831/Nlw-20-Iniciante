@@ -28,14 +28,14 @@ function showGames(games){
 
                 contentOptionGames.innerHTML += `
                     <div id="${countPages}" class="list-games animation-fadeIn hidden">
-                        <li>${game}</li>
+                        <li data-value>${game}</li>
                     </div>  
                 `;
 
                 contentListPages.innerHTML += `<li>${countPages}</li>`;
             } else {
                 contentOptionGames.children[countPages - 1].innerHTML += `
-                    <li>${game}</li>
+                    <li data-value>${game}</li>
                 `;
             }
         } else {
@@ -44,14 +44,14 @@ function showGames(games){
 
                 contentOptionGames.innerHTML += `
                     <div id="${countPages}" class="list-games animation-fadeIn hidden">
-                        <li value="${game}">${game}</li>
+                        <li data-value="${game}">${game}</li>
                     </div>  
                 `;
 
                 contentListPages.innerHTML += `<li>${countPages}</li>`;
             } else {
                 contentOptionGames.children[countPages - 1].innerHTML += `
-                    <li value="${game}">${game}</li>
+                    <li data-value="${game}">${game}</li>
                 `;
             }
         }
@@ -110,12 +110,10 @@ window.requestGames = () => {
 requestGames();
 
 window.addEventListener('click', ({target}) => {
-
-    if(!contentGames.contains(target) || contentListPages.contains(target)){
+    if(!contentGames.contains(target) && !target.id || target.dataset.value){
         contentGames.classList.add(classHidden);
         contentGames.classList.remove(classFlex);
-    }
-                
+    }         
 }); 
 
 selectGame.addEventListener('click', (event) => {
