@@ -110,7 +110,7 @@ window.requestGames = () => {
 requestGames();
 
 window.addEventListener('click', ({target}) => {
-    if(!contentGames.contains(target) && !target.id || target.dataset.value){
+    if((!contentGames.contains(target) && !target.id) || target.dataset.value){
         contentGames.classList.add(classHidden);
         contentGames.classList.remove(classFlex);
     }         
