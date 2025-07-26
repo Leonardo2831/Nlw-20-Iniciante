@@ -43,12 +43,12 @@ function showGames(games){
                 countPages++;
 
                 contentOptionGames.innerHTML += `
-                    <div id="${countPages}" class="list-games animation-fadeIn hidden">
+                    <div id="page${countPages}" class="list-games animation-fadeIn hidden">
                         <li data-value="${game}">${game}</li>
                     </div>  
                 `;
 
-                contentListPages.innerHTML += `<li>${countPages}</li>`;
+                contentListPages.innerHTML += `<li onclick="togglePage(event)">${countPages}</li>`;
             } else {
                 contentOptionGames.children[countPages - 1].innerHTML += `
                     <li data-value="${game}">${game}</li>
@@ -121,3 +121,19 @@ selectGame.addEventListener('click', (event) => {
     contentGames.classList.remove(classHidden);
     contentGames.classList.add(classFlex);
 });
+
+window.togglePage = ({target}) => {
+    const pages = Array.from(target.parentElement.previousElementSibling.children);   
+    console.log(pages);
+     
+
+    pages.forEach((page) => {        
+        if(!page.classList.contains(classHidden)){
+            page.classList.add(classHidden);
+        }
+    });
+
+    const pageToggle = selectItem.Single(`#page${target.textContent}`);
+    
+    pageToggle.classList.remove(classHidden);
+}
