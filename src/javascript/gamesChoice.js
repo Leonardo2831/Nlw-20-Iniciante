@@ -28,14 +28,14 @@ function showGames(games){
 
                 contentOptionGames.innerHTML += `
                     <div id="${countPages}" class="list-games animation-fadeIn hidden">
-                        <li data-value>${game}</li>
+                        <li data-value="${game}" onclick="selectGameInput(event);">${game}</li>
                     </div>  
                 `;
 
                 contentListPages.innerHTML += `<li>${countPages}</li>`;
             } else {
                 contentOptionGames.children[countPages - 1].innerHTML += `
-                    <li data-value>${game}</li>
+                    <li data-value="${game}" onclick="selectGameInput(event);">${game}</li>
                 `;
             }
         } else {
@@ -44,21 +44,21 @@ function showGames(games){
 
                 contentOptionGames.innerHTML += `
                     <div id="page${countPages}" class="list-games animation-fadeIn hidden">
-                        <li data-value="${game}">${game}</li>
+                        <li data-value="${game}" onclick="selectGameInput(event);">${game}</li>
                     </div>  
                 `;
 
-                contentListPages.innerHTML += `<li onclick="togglePage(event)">${countPages}</li>`;
+                contentListPages.innerHTML += `<li onclick="togglePage(event);">${countPages}</li>`;
             } else {
                 contentOptionGames.children[countPages - 1].innerHTML += `
-                    <li data-value="${game}">${game}</li>
+                    <li data-value="${game}" onclick="selectGameInput(event);">${game}</li>
                 `;
             }
         }
 
         if(games.length - 1 === index){
             contentListPages.innerHTML += `
-                <li onclick="requestGames()" id="morePages" class="flex items-center justify-center gap-1 text-center">
+                <li onclick="togglePage(event);" id="morePages" class="flex items-center justify-center gap-1 text-center">
                     <div class="w-1 h-1 rounded-full bg-gray-text"></div>
                     <div class="w-1 h-1 rounded-full bg-gray-text"></div>
                     <div class="w-1 h-1 rounded-full bg-gray-text"></div>
@@ -70,6 +70,17 @@ function showGames(games){
     });
 
     contentOptionGames.children[0].classList.remove(classHidden);
+}
+
+window.selectGameInput = ({currentTarget}) => {
+    console.log('foi?');
+    
+    const selectedValue = currentTarget.dataset.value;
+    console.log(selectedValue);
+    
+
+    selectGame.textContent = selectedValue;
+    selectGame.value = selectedValue;
 }
 
 // window para definir globalmente e usar no html
@@ -122,18 +133,24 @@ selectGame.addEventListener('click', (event) => {
     contentGames.classList.add(classFlex);
 });
 
-window.togglePage = ({target}) => {
-    const pages = Array.from(target.parentElement.previousElementSibling.children);   
-    console.log(pages);
-     
+window.togglePage = ({target, currentTarget}) => {
 
-    pages.forEach((page) => {        
-        if(!page.classList.contains(classHidden)){
-            page.classList.add(classHidden);
+    if(currentTarget.id == 'morePages'){
+        requestGames();
+    } else {
+        const pages = Array.from(target.parentElement.previousElementSibling.children);       
+
+        pages.forEach((page) => {        
+            if(!page.classList.contains(classHidden)){
+                page.classList.add(classHidden);
+            }
+        });
+
+        const pageToggle = selectItem.Single(`#page${target.textContent ? target.textContent : null}`);
+
+        if(target.id !== 'morePages' && pageToggle){
+            pageToggle.classList.remove(classHidden);
         }
-    });
+    }
 
-    const pageToggle = selectItem.Single(`#page${target.textContent}`);
-    
-    pageToggle.classList.remove(classHidden);
 }
