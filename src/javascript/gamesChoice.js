@@ -164,9 +164,22 @@ function fetchGameSearch(arrayTags){
     contentItemsSteam.classList.add(classHidden);
 
     try {
-        
+        // remover depois
+        contentOptionGames.innerHTML += `
+            <div id="ErrorFetch"class="list-games animation-fadeIn">
+                <li>Seu jogo não foi encontrado ou houve um erro, tente novamente!</li>
+            </div>
+        `; 
+
+        console.log('1');        
+
+        setTimeout(() => {
+            const errorFetch = selectItem.Single('#ErrorFetch') || null;
+
+            if(errorFetch) errorFetch.remove();
+        }, 3000);   
     } catch(error) {
-        contentOptionGames.innerHTML = `
+        contentOptionGames.innerHTML += `
             <div id="ErrorFetch"class="list-games animation-fadeIn">
                 <li>Seu jogo não foi encontrado ou houve um erro, tente novamente!</li>
             </div>
@@ -175,15 +188,15 @@ function fetchGameSearch(arrayTags){
         setTimeout(() => {
             const errorFetch = selectItem.Single('#ErrorFetch') || null;
 
-            arrayTags.forEach((tags) => {
-                tags.classList.remove(classHidden);
-            });
-
             if(errorFetch) errorFetch.remove();
         }, 3000);
     } finally {
         textLoading.classList.add(classHidden);
         contentItemsSteam.classList.remove(classHidden);
+
+        arrayTags.forEach((tags) => {
+            tags.classList.remove(classHidden);
+        });
     }
 }
 
@@ -207,8 +220,6 @@ function searchGame(){
         }
 
         if(gamesTag.length === index && countHidden === index){
-            fetchGameSearch
-        } else {
             fetchGameSearch(gamesTag);
         }
     });
