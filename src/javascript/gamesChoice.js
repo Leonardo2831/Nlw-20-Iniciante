@@ -73,12 +73,8 @@ function showGames(games){
 }
 
 window.selectGameInput = ({currentTarget}) => {
-    console.log('foi?');
-    
     const selectedValue = currentTarget.dataset.value;
-    console.log(selectedValue);
     
-
     selectGame.textContent = selectedValue;
     selectGame.value = selectedValue;
 }
