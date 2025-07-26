@@ -8,10 +8,6 @@ const contentGames = selectItem.Single('#choiceGame');
 const classHidden = 'hidden';
 const classFlex = 'flex';
 
-function filterGames(){
-
-}
-
 const contentOptionGames = selectItem.Single('#optionGamesContent');
 const contentListPages = selectItem.Single('#listPages');
 
@@ -27,7 +23,7 @@ function showGames(games){
                 countPages++;
 
                 contentOptionGames.innerHTML += `
-                    <div id="${countPages}" class="list-games animation-fadeIn hidden">
+                    <div id="page${countPages}" class="list-games animation-fadeIn hidden">
                         <li data-value="${game}" onclick="selectGameInput(event);">${game}</li>
                     </div>  
                 `;
@@ -79,8 +75,11 @@ window.selectGameInput = ({currentTarget}) => {
     selectGame.value = selectedValue;
 }
 
+const contentItemsSteam = selectItem.Single('#contentItemsSteam');
+const textLoading = selectItem.Single('#textLoading');
+
 // window para definir globalmente e usar no html
-window.requestGames = () => {
+window.requestGames = async () => {
     const morePages = selectItem.Single('#morePages') || null;
 
     if(morePages){
@@ -88,13 +87,11 @@ window.requestGames = () => {
         morePages.classList.add('loadingPages');
     }
 
-    const contentItemsSteam = selectItem.Single('#contentItemsSteam');
-    const textLoading = selectItem.Single('#textLoading');
     textLoading.classList.remove(classHidden);
 
     try {
         // const response = await fetch('https://nlw-20-iniciante-three.vercel.app/api/requestGames');
-        // const games = await response.json();
+        // const gamesTest = await response.json();
         let games = ['Counter', 'Overcooked', 'Fortnite', 'Remnant from the ashes', 'Remnant II', 'God of War', 'Counter', 'Overcooked', 'Fortnite'];
         
         if(morePages) morePages.remove();
@@ -150,3 +147,79 @@ window.togglePage = ({target, currentTarget}) => {
     }
 
 }
+
+const inputFilter = selectItem.Single('#filterGames');
+const infoSearch = selectItem.Single('#infoSearch');
+
+function filterGames(){
+    infoSearch.classList.remove(classHidden);
+
+    if(inputFilter.value === ''){
+        infoSearch.classList.add(classHidden);
+    }
+}
+
+function fetchGameSearch(arrayTags){
+    textLoading.classList.remove(classHidden);
+    contentItemsSteam.classList.add(classHidden);
+
+    try {
+        
+    } catch(error) {
+        contentOptionGames.innerHTML = `
+            <div id="ErrorFetch"class="list-games animation-fadeIn">
+                <li>Seu jogo não foi encontrado ou houve um erro, tente novamente!</li>
+            </div>
+        `; 
+
+        setTimeout(() => {
+            const errorFetch = selectItem.Single('#ErrorFetch') || null;
+
+            arrayTags.forEach((tags) => {
+                tags.classList.remove(classHidden);
+            });
+
+            if(errorFetch) errorFetch.remove();
+        }, 3000);
+    } finally {
+        textLoading.classList.add(classHidden);
+        contentItemsSteam.classList.remove(classHidden);
+    }
+}
+
+function searchGame(){
+    const pagesNumber = contentListPages.children.length - 1;
+    let gamesTag = [];
+    
+    for(let i = 1; i <= pagesNumber; i++){
+        const listGamesContent = selectItem.Single(`#page${i}`);   
+        const listGames = Array.from(listGamesContent.children);       
+
+        gamesTag = [...gamesTag, ...listGames];
+    }
+
+    gamesTag.forEach((gameTag, index) => {
+        let countHidden = 0;
+
+        if(gameTag.dataset.value !== inputFilter.value.trim()){
+            gameTag.classList.add(classHidden);
+            countHidden++;
+        }
+
+        if(gamesTag.length === index && countHidden === index){
+            fetchGameSearch
+        } else {
+            fetchGameSearch(gamesTag);
+        }
+    });
+    
+}
+
+inputFilter.addEventListener('input', filterGames);
+
+inputFilter.addEventListener('keydown', (event) => {
+    if(event.key == 'Enter'){
+        event.preventDefault();
+        searchGame();
+    }
+});
