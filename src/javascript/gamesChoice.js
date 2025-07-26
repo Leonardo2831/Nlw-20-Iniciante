@@ -164,20 +164,7 @@ function fetchGameSearch(arrayTags){
     contentItemsSteam.classList.add(classHidden);
 
     try {
-        // remover depois
-        contentOptionGames.innerHTML += `
-            <div id="ErrorFetch"class="list-games animation-fadeIn">
-                <li>Seu jogo não foi encontrado ou houve um erro, tente novamente!</li>
-            </div>
-        `; 
-
-        console.log('1');        
-
-        setTimeout(() => {
-            const errorFetch = selectItem.Single('#ErrorFetch') || null;
-
-            if(errorFetch) errorFetch.remove();
-        }, 3000);   
+        
     } catch(error) {
         contentOptionGames.innerHTML += `
             <div id="ErrorFetch"class="list-games animation-fadeIn">
@@ -194,8 +181,8 @@ function fetchGameSearch(arrayTags){
         textLoading.classList.add(classHidden);
         contentItemsSteam.classList.remove(classHidden);
 
-        arrayTags.forEach((tags) => {
-            tags.classList.remove(classHidden);
+        arrayTags.forEach((tag) => {
+            tag.classList.remove(classHidden);
         });
     }
 }
@@ -211,15 +198,16 @@ function searchGame(){
         gamesTag = [...gamesTag, ...listGames];
     }
 
-    gamesTag.forEach((gameTag, index) => {
-        let countHidden = 0;
+    let countHidden = 0;
 
-        if(gameTag.dataset.value !== inputFilter.value.trim()){
+    gamesTag.forEach((gameTag, index) => {
+
+        if(gameTag.dataset.value.toLowerCase() !== inputFilter.value.trim().toLowerCase()){
             gameTag.classList.add(classHidden);
             countHidden++;
         }
 
-        if(gamesTag.length === index && countHidden === index){
+        if(gamesTag.length === (index + 1) && countHidden === (index + 1)){
             fetchGameSearch(gamesTag);
         }
     });
