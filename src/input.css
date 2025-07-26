@@ -117,9 +117,9 @@
     }
 
     .list-pages{
-        @apply mt-5 flex items-center justify-center gap-4 
+        @apply w-full max-w-[600px] overflow-x-auto snap-x snap-mandatory p-3 mt-5 flex items-center justify-self-center gap-4 
         *:flex *:items-center *:justify-center *:bg-background-black-opacity-response *:text-gray-text *:font-medium *:rounded-lg 
-        *:p-1 *:w-9 *:h-9 *:cursor-pointer *:hover:bg-background-gray-hover *:transition-all;
+        *:p-1 *:min-w-9 *:min-h-9 *:cursor-pointer *:hover:bg-background-gray-hover *:transition-all;
     }
 
     .animation-fadeIn{
