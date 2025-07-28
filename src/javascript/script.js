@@ -10,9 +10,7 @@ const submitButton = selectItem.Single('#submit-button');
 
 const apiResponseContent = selectItem.Single('#aiResponse');
 
-form.addEventListener('submit', async (event) => {
-    event.preventDefault();
-
+async function fetchGemini(){
     apiResponseContent.classList.add('hidden');
 
     if(inputQuestion.value == '' || selectGame.value == ''){
@@ -56,5 +54,18 @@ form.addEventListener('submit', async (event) => {
         submitButton.textContent = 'Perguntar'
         submitButton.classList.remove('animate-loading');
     }
+}
 
+form.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    fetchGemini();
+});
+
+document.addEventListener('keydown', (event) => {
+    event.preventDefault();
+
+    if(event.key === 'Enter'){
+        fetchGemini();
+    }
 });
