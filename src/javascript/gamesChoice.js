@@ -13,7 +13,7 @@ const contentListPages = selectItem.Single('#listPages');
 
 let countPages = 0;
 let countGames = 0;
-let indexGame = 0;
+let indexGames = 0;
 let games = [];
 
 function showGames(){
@@ -23,9 +23,9 @@ function showGames(){
 
     if(morePages) morePages.remove();
 
-    indexGame = indexGame + 20;        
+    indexGames = indexGames + 20;        
 
-    for(countGames; countGames < indexGame; countGames++){
+    for(countGames; countGames < indexGames; countGames++){
 
         if(games[countGames] && height < 768){
             if(countPages === 0 || countGames % 3 === 0){
@@ -158,7 +158,7 @@ window.togglePage = ({target, currentTarget}) => {
 const inputFilter = selectItem.Single('#filterGames');
 const infoSearch = selectItem.Single('#infoSearch');
 
-function filterGames(){
+function filterGamesInfo(){
     infoSearch.classList.remove(classHidden);
 
     if(inputFilter.value === ''){
@@ -166,35 +166,42 @@ function filterGames(){
     }
 }
 
-function fetchGameSearch(arrayTags){
-    textLoading.classList.remove(classHidden);
-    contentItemsSteam.classList.add(classHidden);
+function addGameSearch(inputTextFilter){
+    const termsNameGame = inputTextFilter.name.toLowerCase().split(' ');
 
-    try {
-        
-    } catch(error) {
-        contentOptionGames.innerHTML += `
-            <div id="ErrorFetch"class="list-games animation-fadeIn">
-                <li>Seu jogo não foi encontrado ou houve um erro, tente novamente!</li>
-            </div>
-        `; 
+    const gamesFind = games.filter((gameFind) => {
+        gameFind.name.toLowerCase().includes(termsNameGame);
+    });
 
-        setTimeout(() => {
-            const errorFetch = selectItem.Single('#ErrorFetch') || null;
+    const gamesRemaining = games.filter((gameRemaining) => {
+        // pegar os jogos que não batem com a pesquisa
+        !gameRemaining.name.toLowerCase().includes(termsNameGame);
+    });
 
-            if(errorFetch) errorFetch.remove();
-        }, 3000);
-    } finally {
-        textLoading.classList.add(classHidden);
-        contentItemsSteam.classList.remove(classHidden);
+    games.length = 0;
+    games.push(...gamesRemaining);
+    console.log(games);
+    
+    gamesFind.forEach((gameFind) => {
+        if(contentOptionGames.children[contentOptionGames.children.length - 1].children.length === 5){
+            contentOptionGames.innerHTML += `
+                <div id="page${contentOptionGames.children.length + 1}" class="list-games animation-fadeIn hidden">
+                    <li data-value="${gameFind.name}" onclick="selectGameInput(event);">${gameFind.name}</li>
+                </div>  
+            `;
 
-        arrayTags.forEach((tag) => {
-            tag.classList.remove(classHidden);
-        });
-    }
+            contentListPages.innerHTML += `<li onclick="togglePage(event);">${countPages}</li>`;
+        } else {
+            contentOptionGames.children[contentOptionGames.children.length - 1].innerHTML += `
+                <li data-value="${gameFind.name}" onclick="selectGameInput(event);">${gameFind.name}</li>
+            `;
+        }
+    });
+
+    indexGames = indexGames + gamesFind;
 }
 
-function searchGame(){
+function searchGame(inputTextFilter){
     const pagesNumber = contentListPages.children.length - 1;
     let gamesTag = [];
     
@@ -215,17 +222,17 @@ function searchGame(){
         }
 
         if(gamesTag.length === (index + 1) && countHidden === (index + 1)){
-            fetchGameSearch(gamesTag);
+            addGameSearch(inputTextFilter);
         }
     });
     
 }
 
-inputFilter.addEventListener('input', filterGames);
+inputFilter.addEventListener('input', filterGamesInfo);
 
 inputFilter.addEventListener('keydown', (event) => {
     if(event.key == 'Enter'){
         event.preventDefault();
-        searchGame();
+        searchGame(inputFilter.value);
     }
 });
