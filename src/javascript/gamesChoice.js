@@ -68,19 +68,10 @@ window.requestGames = async () => {
     textLoading.classList.remove(classHidden);
 
     try {
-
-        games = [
-            'Counter', 'Overcooked', 'Fortnite', 'Remnant from the ashes', 'Remnant II', 'God of War', 'Counter', 'Overcooked', 'Fortnite', 'GTA',
-            'Counter', 'Overcooked', 'Fortnite', 'Remnant from the ashes', 'Remnant II', 'God of War', 'Counter', 'Overcooked', 'Fortnite', 'GTA',
-            'Counter', 'Overcooked', 'Fortnite', 'Remnant from the ashes', 'Remnant II', 'God of War', 'Counter', 'Overcooked', 'Fortnite', 'GTA',
-            'Counter', 'Overcooked', 'Fortnite', 'Remnant from the ashes', 'Remnant II', 'God of War', 'Counter', 'Overcooked', 'Fortnite', 'GTA',
-            'Counter', 'Overcooked', 'Fortnite', 'Remnant from the ashes', 'Remnant II', 'God of War', 'Counter', 'Overcooked', 'Fortnite', 'GTA',
-            'Counter', 'Overcooked', 'Fortnite', 'Remnant from the ashes', 'Remnant II', 'God of War', 'Counter', 'Overcooked', 'Fortnite', 'GTA',
-        ];
-        // const response = await fetch('https://nlw-20-iniciante-three.vercel.app/api/requestGames');
-        // const gamesResponse = await response.json();
+        const response = await fetch('https://nlw-20-iniciante-three.vercel.app/api/requestGames');
+        const gamesResponse = await response.json();
         
-        // games = gamesResponse.map(game => game.name);
+        games = gamesResponse.map(game => game.name);
     
         showGames();
     } catch(error) {
@@ -153,63 +144,23 @@ function addGameSearch(inputTextFilter){
     const resultsSearch = fuse.search(inputTextFilter);
     const gamesFind = resultsSearch.map(result => result.item);
 
-    gamesFind.forEach((gameFind) =>{
-        const indexRemove = games.indexOf(gameFind);
-
-        games.splice(indexRemove, 1);
-    });
-    
+    contentOptionGames.innerHTML = '';
     gamesFind.forEach((gameFind) => {
-        if(contentOptionGames.children[contentOptionGames.children.length - 1].children.length === 5){
-            contentOptionGames.innerHTML += `
-                <div id="page${contentOptionGames.children.length + 1}" class="list-games animation-fadeIn hidden">
-                    <li data-value="${gameFind}" onclick="selectGameInput(event);">${gameFind}</li>
-                </div>  
-            `;
-
-            contentListPages.innerHTML += `<li onclick="togglePage(event);">${countPages}</li>`;
-        } else {
-            contentOptionGames.children[contentOptionGames.children.length - 1].innerHTML += `
-                <li data-value="${gameFind}" onclick="selectGameInput(event);">${gameFind}</li>
-            `;
-        }
+        contentOptionGames.innerHTML += `
+            <li data-value="${gameFind}" onclick="selectGameInput(event);">${gameFind}</li>
+        `;
     });
-
-    indexGames = indexGames + gamesFind;
-}
-
-function searchGame(inputTextFilter){
-    const pagesNumber = contentListPages.children.length - 1;
-    let gamesTag = [];
-    
-    for(let i = 1; i <= pagesNumber; i++){
-        const listGamesContent = selectItem.Single(`#page${i}`);   
-        const listGames = Array.from(listGamesContent.children);       
-
-        gamesTag = [...gamesTag, ...listGames];
-    }
-
-    let countHidden = 0;
-
-    gamesTag.forEach((gameTag, index) => {
-
-        if(gameTag.dataset.value.toLowerCase() !== inputFilter.value.trim().toLowerCase()){
-            gameTag.classList.add(classHidden);
-            countHidden++;
-        }
-
-        if(gamesTag.length === (index + 1) && countHidden === (index + 1)){
-            addGameSearch(inputTextFilter);
-        }
-    });
-    
 }
 
 inputFilter.addEventListener('input', filterGamesInfo);
+inputFilter.addEventListener('input', (event) => {
+    event.stopPropagation();
+    showGames();
+});
 
 inputFilter.addEventListener('keydown', (event) => {
     if(event.key == 'Enter'){
         event.preventDefault();
-        searchGame(inputFilter.value);
+        addGameSearch(inputFilter.value);
     }
 });
