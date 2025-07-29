@@ -33,14 +33,14 @@ function showGames(){
 
                 contentOptionGames.innerHTML += `
                     <div id="page${countPages}" class="list-games animation-fadeIn hidden">
-                        <li data-value="${games[countGames].name}" onclick="selectGameInput(event);">${games[countGames].name}</li>
+                        <li data-value="${games[countGames]}" onclick="selectGameInput(event);">${games[countGames]}</li>
                     </div>  
                 `;
 
                 contentListPages.innerHTML += `<li>${countPages}</li>`;
             } else {
                 contentOptionGames.children[countPages - 1].innerHTML += `
-                    <li data-value="${games[countGames].name}" onclick="selectGameInput(event);">${games[countGames].name}</li>
+                    <li data-value="${games[countGames]}" onclick="selectGameInput(event);">${games[countGames]}</li>
                 `;
             }
         } else if(games[countGames]) {
@@ -49,14 +49,14 @@ function showGames(){
 
                 contentOptionGames.innerHTML += `
                     <div id="page${countPages}" class="list-games animation-fadeIn hidden">
-                        <li data-value="${games[countGames].name}" onclick="selectGameInput(event);">${games[countGames].name}</li>
+                        <li data-value="${games[countGames]}" onclick="selectGameInput(event);">${games[countGames]}</li>
                     </div>  
                 `;
 
                 contentListPages.innerHTML += `<li onclick="togglePage(event);">${countPages}</li>`;
             } else {
                 contentOptionGames.children[countPages - 1].innerHTML += `
-                    <li data-value="${games[countGames].name}" onclick="selectGameInput(event);">${games[countGames].name}</li>
+                    <li data-value="${games[countGames]}" onclick="selectGameInput(event);">${games[countGames]}</li>
                 `;
             }
         }
