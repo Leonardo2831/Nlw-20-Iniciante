@@ -144,7 +144,7 @@ function addGameSearch(inputTextFilter){
     const gamesFind = resultsSearch.map(result => result.item);
 
     contentOptionGames.innerHTML = '';
-    gamesFind.forEach((gameFind, index) => {
+    gamesFind.every((gameFind, index) => {
         contentOptionGames.innerHTML += `
             <li class="animation-fadeIn" data-value="${gameFind}" onclick="selectGameInput(event);">${gameFind}</li>
         `;
