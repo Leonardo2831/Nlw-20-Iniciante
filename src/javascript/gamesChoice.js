@@ -13,59 +13,65 @@ const contentListPages = selectItem.Single('#listPages');
 
 let countPages = 0;
 let countGames = 0;
+let indexGame = 0;
+let games = [];
 
-function showGames(games){
+function showGames(){
     const height = window.innerHeight;
+    
+    const morePages = selectItem.Single('#morePages') || null;
 
-    games.forEach((game, index) => {
-        if(height < 768){
+    if(morePages) morePages.remove();
+
+    indexGame = indexGame + 20;        
+
+    for(countGames; countGames < indexGame; countGames++){
+
+        if(games[countGames] && height < 768){
             if(countPages === 0 || countGames % 3 === 0){
                 countPages++;
 
                 contentOptionGames.innerHTML += `
                     <div id="page${countPages}" class="list-games animation-fadeIn hidden">
-                        <li data-value="${game}" onclick="selectGameInput(event);">${game}</li>
+                        <li data-value="${games[countGames].name}" onclick="selectGameInput(event);">${games[countGames].name}</li>
                     </div>  
                 `;
 
                 contentListPages.innerHTML += `<li>${countPages}</li>`;
             } else {
                 contentOptionGames.children[countPages - 1].innerHTML += `
-                    <li data-value="${game}" onclick="selectGameInput(event);">${game}</li>
+                    <li data-value="${games[countGames].name}" onclick="selectGameInput(event);">${games[countGames].name}</li>
                 `;
             }
-        } else {
+        } else if(games[countGames]) {
             if(countPages === 0 || countGames % 5 === 0){
                 countPages++;
 
                 contentOptionGames.innerHTML += `
                     <div id="page${countPages}" class="list-games animation-fadeIn hidden">
-                        <li data-value="${game}" onclick="selectGameInput(event);">${game}</li>
+                        <li data-value="${games[countGames].name}" onclick="selectGameInput(event);">${games[countGames].name}</li>
                     </div>  
                 `;
 
                 contentListPages.innerHTML += `<li onclick="togglePage(event);">${countPages}</li>`;
             } else {
                 contentOptionGames.children[countPages - 1].innerHTML += `
-                    <li data-value="${game}" onclick="selectGameInput(event);">${game}</li>
+                    <li data-value="${games[countGames].name}" onclick="selectGameInput(event);">${games[countGames].name}</li>
                 `;
             }
         }
 
-        if(games.length - 1 === index){
-            contentListPages.innerHTML += `
-                <li onclick="togglePage(event);" id="morePages" class="flex items-center justify-center gap-1 text-center">
-                    <div class="w-1 h-1 rounded-full bg-gray-text"></div>
-                    <div class="w-1 h-1 rounded-full bg-gray-text"></div>
-                    <div class="w-1 h-1 rounded-full bg-gray-text"></div>
-                </li>
-            `;
-        }
-            
-        countGames++;
-    });
+    }
 
     contentOptionGames.children[0].classList.remove(classHidden);
+
+    contentListPages.innerHTML += `
+        <li onclick="togglePage(event);" id="morePages" class="flex items-center justify-center gap-1 text-center">
+            <div class="w-1 h-1 rounded-full bg-gray-text"></div>
+            <div class="w-1 h-1 rounded-full bg-gray-text"></div>
+            <div class="w-1 h-1 rounded-full bg-gray-text"></div>
+        </li>
+    `;
 }
 
 window.selectGameInput = ({currentTarget}) => {
@@ -78,24 +84,24 @@ window.selectGameInput = ({currentTarget}) => {
 const contentItemsSteam = selectItem.Single('#contentItemsSteam');
 const textLoading = selectItem.Single('#textLoading');
 
+// [
+//     'Counter', 'Overcooked', 'Fortnite', 'Remnant from the ashes', 'Remnant II', 'God of War', 'Counter', 'Overcooked', 'Fortnite', 'GTA',
+//     'Counter', 'Overcooked', 'Fortnite', 'Remnant from the ashes', 'Remnant II', 'God of War', 'Counter', 'Overcooked', 'Fortnite', 'GTA'
+// ];
+
 // window para definir globalmente e usar no html
 window.requestGames = async () => {
-    const morePages = selectItem.Single('#morePages') || null;
-
-    if(morePages){
-        morePages.textContent = '';
-        morePages.classList.add('loadingPages');
-    }
-
     textLoading.classList.remove(classHidden);
 
     try {
-        // const response = await fetch('https://nlw-20-iniciante-three.vercel.app/api/requestGames');
-        // const gamesTest = await response.json();
-        let games = ['Counter', 'Overcooked', 'Fortnite', 'Remnant from the ashes', 'Remnant II', 'God of War', 'Counter', 'Overcooked', 'Fortnite'];
+        const response = await fetch('https://nlw-20-iniciante-three.vercel.app/api/requestGames');
+        const gamesResponse = await response.json();
         
-        if(morePages) morePages.remove();
-        showGames(games);
+        games = gamesResponse;
+
+        console.log(games);
+    
+        showGames();
     } catch(error) {
         contentOptionGames.innerHTML = `
             <div class="list-games animation-fadeIn">
@@ -107,7 +113,6 @@ window.requestGames = async () => {
     } finally {
         textLoading.classList.add(classHidden);
         contentItemsSteam.classList.remove(classHidden);
-        if(morePages) morePages.remove();
     }
 }
 
@@ -129,7 +134,7 @@ selectGame.addEventListener('click', (event) => {
 window.togglePage = ({target, currentTarget}) => {
 
     if(currentTarget.id == 'morePages'){
-        requestGames();
+        showGames();
     } else {
         const pages = Array.from(target.parentElement.previousElementSibling.children);       
 
