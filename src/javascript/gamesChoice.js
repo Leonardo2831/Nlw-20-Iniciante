@@ -68,10 +68,10 @@ window.requestGames = async () => {
     textLoading.classList.remove(classHidden);
 
     try {
-        // const response = await fetch('https://nlw-20-iniciante-three.vercel.app/api/requestGames');
-        // const gamesResponse = await response.json();
+        const response = await fetch('https://nlw-20-iniciante-three.vercel.app/api/requestGames');
+        const gamesResponse = await response.json();
         
-        // games = gamesResponse.map(game => game.name);
+        games = gamesResponse.map(game => game.name);
     
         showGames();
     } catch(error) {
