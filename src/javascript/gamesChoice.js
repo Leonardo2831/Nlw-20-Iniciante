@@ -167,7 +167,7 @@ function filterGamesInfo(){
 }
 
 function addGameSearch(inputTextFilter){
-    const termsNameGame = inputTextFilter.name.toLowerCase().split(' ');
+    const termsNameGame = inputTextFilter.toLowerCase().split(' ');
 
     const gamesFind = games.filter((gameFind) => {
         gameFind.name.toLowerCase().includes(termsNameGame);
