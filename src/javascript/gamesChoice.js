@@ -128,7 +128,7 @@ window.togglePage = (event) => {
 
 const inputFilter = selectItem.Single('#filterGames');
 const infoSearch = selectItem.Single('#infoSearch');
-const fuse = new Fuse(games, { threshold: 0 });
+const fuse = new Fuse(games, { threshold: 0.4 });
 
 function filterGamesInfo(){
     infoSearch.classList.remove(classHidden);
@@ -154,7 +154,7 @@ function addGameSearch(inputTextFilter){
 inputFilter.addEventListener('input', filterGamesInfo);
 inputFilter.addEventListener('input', (event) => {
     event.stopPropagation();
-    showGames();
+    if(inputFilter.value === '') showGames();
 });
 
 inputFilter.addEventListener('keydown', (event) => {
