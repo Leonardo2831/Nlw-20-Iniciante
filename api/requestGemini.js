@@ -27,7 +27,7 @@ export default async function requestGemini(req, res){
             Você deve responder as perguntas do usuário com base no seu conhecimento do jogo, estratégias, builds e dicas.
 
             ## Regras
-            - Se você não sabe a resposta, responda com "Não sei" e não tente inventar uma resposta.
+            - Se você não sabe a resposta, busque a resposta e não tente inventar uma resposta para a pergunta.
             - Se a pergunta não está relacionada ao jogo, responda com "Essa pergunta não está relacionada ao jogo".
             - Considere a data atual ${new Date().toLocaleDateString()}.
             - Faça pesquisas atualizadas sobre o patch atual baseada na data atual para dar uma resposta coerente.
@@ -47,7 +47,7 @@ export default async function requestGemini(req, res){
 
             ---
 
-            Aqui está a pergunta do usuário: ${input}
+            Aqui está a pergunta do usuário para o ${contextGame}: ${input}
             `;
 
         const result = await modelFlash.generateContent(prompt);
