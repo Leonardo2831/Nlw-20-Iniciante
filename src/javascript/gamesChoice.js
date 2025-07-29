@@ -11,67 +11,46 @@ const classFlex = 'flex';
 const contentOptionGames = selectItem.Single('#optionGamesContent');
 const contentListPages = selectItem.Single('#listPages');
 
-let countPages = 0;
-let countGames = 0;
+let countPages = 1;
 let indexGames = 0;
 let games = [];
 
-function showGames(){
-    const height = window.innerHeight;
+function showGames(indexGamesPage){
+    indexGamesPage ??= 1;
     
-    const morePages = selectItem.Single('#morePages') || null;
+    let countGames = 0;
+    const height = window.innerHeight;
 
-    if(morePages) morePages.remove();
-
-    indexGames = indexGames + 20;        
-
-    for(countGames; countGames < indexGames; countGames++){
-
-        if(games[countGames] && height < 768){
-            if(countPages === 0 || countGames % 3 === 0){
-                countPages++;
-
-                contentOptionGames.innerHTML += `
-                    <div id="page${countPages}" class="list-games animation-fadeIn hidden">
-                        <li data-value="${games[countGames]}" onclick="selectGameInput(event);">${games[countGames]}</li>
-                    </div>  
-                `;
-
-                contentListPages.innerHTML += `<li>${countPages}</li>`;
-            } else {
-                contentOptionGames.children[countPages - 1].innerHTML += `
-                    <li data-value="${games[countGames]}" onclick="selectGameInput(event);">${games[countGames]}</li>
-                `;
-            }
-        } else if(games[countGames]) {
-            if(countPages === 0 || countGames % 5 === 0){
-                countPages++;
-
-                contentOptionGames.innerHTML += `
-                    <div id="page${countPages}" class="list-games animation-fadeIn hidden">
-                        <li data-value="${games[countGames]}" onclick="selectGameInput(event);">${games[countGames]}</li>
-                    </div>  
-                `;
-
-                contentListPages.innerHTML += `<li onclick="togglePage(event);">${countPages}</li>`;
-            } else {
-                contentOptionGames.children[countPages - 1].innerHTML += `
-                    <li data-value="${games[countGames]}" onclick="selectGameInput(event);">${games[countGames]}</li>
-                `;
-            }
-        }
-
+    if(height < 768){
+        countGames = indexGamesPage * 3;
+        indexGames = countGames - 3;
+    } else {
+        countGames = indexGamesPage * 5;
+        indexGames = countGames - 5;
     }
 
-    contentOptionGames.children[0].classList.remove(classHidden);
+    contentOptionGames.innerHTML = '';
+    for(indexGames; indexGames < countGames; indexGames++){            
+        contentOptionGames.innerHTML += `
+            <li data-value="${games[indexGames]}" onclick="selectGameInput(event);">${games[indexGames]}</li>
+        `;
+    }
 
-    contentListPages.innerHTML += `
-        <li onclick="togglePage(event);" id="morePages" class="flex items-center justify-center gap-1 text-center">
-            <div class="w-1 h-1 rounded-full bg-gray-text"></div>
-            <div class="w-1 h-1 rounded-full bg-gray-text"></div>
-            <div class="w-1 h-1 rounded-full bg-gray-text"></div>
-        </li>
-    `;
+    if(countPages === 1){
+        contentListPages.innerHTML += `
+            <li onclick="togglePage(event);" class="flex items-center justify-center gap-1 text-center">${countPages}</li>
+            <li onclick="togglePage(event);" class="flex items-center justify-center gap-1 text-center">${++countPages}</li>
+            <li onclick="togglePage(event);" class="flex items-center justify-center gap-1 text-center">${++countPages}</li>
+        `;
+
+        contentListPages.innerHTML += `
+            <li onclick="togglePage(event);" id="morePages" class="flex items-center justify-center gap-1 text-center">
+                <div class="w-1 h-1 rounded-full bg-gray-text"></div>
+                <div class="w-1 h-1 rounded-full bg-gray-text"></div>
+                <div class="w-1 h-1 rounded-full bg-gray-text"></div>
+            </li>
+        `;
+    }
 }
 
 window.selectGameInput = ({currentTarget}) => {
@@ -84,22 +63,24 @@ window.selectGameInput = ({currentTarget}) => {
 const contentItemsSteam = selectItem.Single('#contentItemsSteam');
 const textLoading = selectItem.Single('#textLoading');
 
-// [
-//     'Counter', 'Overcooked', 'Fortnite', 'Remnant from the ashes', 'Remnant II', 'God of War', 'Counter', 'Overcooked', 'Fortnite', 'GTA',
-//     'Counter', 'Overcooked', 'Fortnite', 'Remnant from the ashes', 'Remnant II', 'God of War', 'Counter', 'Overcooked', 'Fortnite', 'GTA'
-// ];
-
 // window para definir globalmente e usar no html
 window.requestGames = async () => {
     textLoading.classList.remove(classHidden);
 
     try {
-        const response = await fetch('https://nlw-20-iniciante-three.vercel.app/api/requestGames');
-        const gamesResponse = await response.json();
-        
-        games = gamesResponse.map(game => game.name);
 
-        console.log(games);
+        games = [
+            'Counter', 'Overcooked', 'Fortnite', 'Remnant from the ashes', 'Remnant II', 'God of War', 'Counter', 'Overcooked', 'Fortnite', 'GTA',
+            'Counter', 'Overcooked', 'Fortnite', 'Remnant from the ashes', 'Remnant II', 'God of War', 'Counter', 'Overcooked', 'Fortnite', 'GTA',
+            'Counter', 'Overcooked', 'Fortnite', 'Remnant from the ashes', 'Remnant II', 'God of War', 'Counter', 'Overcooked', 'Fortnite', 'GTA',
+            'Counter', 'Overcooked', 'Fortnite', 'Remnant from the ashes', 'Remnant II', 'God of War', 'Counter', 'Overcooked', 'Fortnite', 'GTA',
+            'Counter', 'Overcooked', 'Fortnite', 'Remnant from the ashes', 'Remnant II', 'God of War', 'Counter', 'Overcooked', 'Fortnite', 'GTA',
+            'Counter', 'Overcooked', 'Fortnite', 'Remnant from the ashes', 'Remnant II', 'God of War', 'Counter', 'Overcooked', 'Fortnite', 'GTA',
+        ];
+        // const response = await fetch('https://nlw-20-iniciante-three.vercel.app/api/requestGames');
+        // const gamesResponse = await response.json();
+        
+        // games = gamesResponse.map(game => game.name);
     
         showGames();
     } catch(error) {
@@ -118,8 +99,8 @@ window.requestGames = async () => {
 
 requestGames();
 
-window.addEventListener('click', ({target}) => {
-    if((!contentGames.contains(target) && !target.id) || target.hasAttribute('data-value')){
+window.addEventListener('click', ({target}) => {    
+    if((!contentGames.contains(target) && (target.parentElement && !target.parentElement.id)) || target.hasAttribute('data-value')){
         contentGames.classList.add(classHidden);
         contentGames.classList.remove(classFlex);
     }         
@@ -132,32 +113,32 @@ selectGame.addEventListener('click', (event) => {
 });
 
 window.togglePage = ({target, currentTarget}) => {
+    contentOptionGames.innerHTML = '';
 
-    if(currentTarget.id == 'morePages'){
-        contentOptionGames.children[0].classList.add(classHidden);
+    if(currentTarget.id === 'morePages'){
+        selectItem.Single('#morePages').remove();
 
-        showGames();
-    } else {
-        const pages = Array.from(target.parentElement.previousElementSibling.children);       
-
-        pages.forEach((page) => {        
-            if(!page.classList.contains(classHidden)){
-                page.classList.add(classHidden);
-            }
-        });
-
-        const pageToggle = selectItem.Single(`#page${target.textContent ? target.textContent : null}`);
-
-        if(target.id !== 'morePages' && pageToggle){
-            pageToggle.classList.remove(classHidden);
-        }
+        contentListPages.innerHTML += `
+            <li onclick="togglePage(event);" class="flex items-center justify-center gap-1 text-center">${++countPages}</li>
+            <li onclick="togglePage(event);" class="flex items-center justify-center gap-1 text-center">${++countPages}</li>
+        `;
+        contentListPages.innerHTML += `
+            <li onclick="togglePage(event);" id="morePages" class="flex items-center justify-center gap-1 text-center">
+                <div class="w-1 h-1 rounded-full bg-gray-text"></div>
+                <div class="w-1 h-1 rounded-full bg-gray-text"></div>
+                <div class="w-1 h-1 rounded-full bg-gray-text"></div>
+            </li>
+        `;
+        
+        showGames(contentListPages.children.length - 2);
+    } else {        
+        showGames(Number(target.textContent));
     }
-
 }
 
 const inputFilter = selectItem.Single('#filterGames');
 const infoSearch = selectItem.Single('#infoSearch');
-const fuse = new fuse(games, { threshold: 0.4 });
+const fuse = new Fuse(games, { threshold: 0 });
 
 function filterGamesInfo(){
     infoSearch.classList.remove(classHidden);
@@ -170,7 +151,6 @@ function filterGamesInfo(){
 function addGameSearch(inputTextFilter){
 
     const resultsSearch = fuse.search(inputTextFilter);
-    console.log(resultsSearch);
     const gamesFind = resultsSearch.map(result => result.item);
 
     gamesFind.forEach((gameFind) =>{
@@ -178,8 +158,6 @@ function addGameSearch(inputTextFilter){
 
         games.splice(indexRemove, 1);
     });
-
-    console.log(games);
     
     gamesFind.forEach((gameFind) => {
         if(contentOptionGames.children[contentOptionGames.children.length - 1].children.length === 5){
