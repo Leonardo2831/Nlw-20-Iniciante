@@ -157,6 +157,7 @@ window.togglePage = ({target, currentTarget}) => {
 
 const inputFilter = selectItem.Single('#filterGames');
 const infoSearch = selectItem.Single('#infoSearch');
+const fuse = new fuse(games, { threshold: 0.4 });
 
 function filterGamesInfo(){
     infoSearch.classList.remove(classHidden);
@@ -167,21 +168,17 @@ function filterGamesInfo(){
 }
 
 function addGameSearch(inputTextFilter){
-    const termsNameGame = inputTextFilter.toLowerCase().split(' ');
 
-    const gamesFind = games.filter((gameFind) => {
-        gameFind.toLowerCase().includes(termsNameGame);
+    const resultsSearch = fuse.search(inputTextFilter);
+    console.log(resultsSearch);
+    const gamesFind = resultsSearch.map(result => result.item);
+
+    gamesFind.forEach((gameFind) =>{
+        const indexRemove = games.indexOf(gameFind);
+
+        games.splice(indexRemove, 1);
     });
 
-    const gamesRemaining = games.filter((gameRemaining) => {
-        // pegar os jogos que não batem com a pesquisa
-        !gameRemaining.toLowerCase().includes(termsNameGame);
-    });
-
-    console.log(gamesRemaining);
-
-    games.length = 0;
-    games.push(...gamesRemaining);
     console.log(games);
     
     gamesFind.forEach((gameFind) => {
