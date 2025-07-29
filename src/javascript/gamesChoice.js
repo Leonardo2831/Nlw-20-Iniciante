@@ -32,7 +32,7 @@ function showGames(indexGamesPage){
     contentOptionGames.innerHTML = '';
     for(indexGames; indexGames < countGames; indexGames++){            
         contentOptionGames.innerHTML += `
-            <li data-value="${games[indexGames]}" onclick="selectGameInput(event);">${games[indexGames]}</li>
+            <li class="animation-fadeIn" data-value="${games[indexGames]}" onclick="selectGameInput(event);">${games[indexGames]}</li>
         `;
     }
 
@@ -68,17 +68,15 @@ window.requestGames = async () => {
     textLoading.classList.remove(classHidden);
 
     try {
-        const response = await fetch('https://nlw-20-iniciante-three.vercel.app/api/requestGames');
-        const gamesResponse = await response.json();
+        // const response = await fetch('https://nlw-20-iniciante-three.vercel.app/api/requestGames');
+        // const gamesResponse = await response.json();
         
-        games = gamesResponse.map(game => game.name);
+        // games = gamesResponse.map(game => game.name);
     
         showGames();
     } catch(error) {
         contentOptionGames.innerHTML = `
-            <div class="list-games animation-fadeIn">
-                <li>Houve um <b>erro</b>, tente novamente mais tarde!</li>
-            </div>
+            <li class="animation-fadeIn">Houve um <b>erro</b>, tente novamente mais tarde!</li>
         `;   
 
         console.error(error);
@@ -91,7 +89,7 @@ window.requestGames = async () => {
 requestGames();
 
 window.addEventListener('click', ({target}) => {    
-    if((!contentGames.contains(target) && (target.parentElement && !target.parentElement.id)) || target.hasAttribute('data-value')){
+    if(!contentGames.contains(target) || target.hasAttribute('data-value')){
         contentGames.classList.add(classHidden);
         contentGames.classList.remove(classFlex);
     }         
@@ -103,10 +101,11 @@ selectGame.addEventListener('click', (event) => {
     contentGames.classList.add(classFlex);
 });
 
-window.togglePage = ({target, currentTarget}) => {
+window.togglePage = (event) => {
+    event.stopPropagation();
     contentOptionGames.innerHTML = '';
 
-    if(currentTarget.id === 'morePages'){
+    if(event.currentTarget.id === 'morePages'){
         selectItem.Single('#morePages').remove();
 
         contentListPages.innerHTML += `
@@ -123,7 +122,7 @@ window.togglePage = ({target, currentTarget}) => {
         
         showGames(contentListPages.children.length - 2);
     } else {        
-        showGames(Number(target.textContent));
+        showGames(Number(event.target.textContent));
     }
 }
 
@@ -147,7 +146,7 @@ function addGameSearch(inputTextFilter){
     contentOptionGames.innerHTML = '';
     gamesFind.forEach((gameFind) => {
         contentOptionGames.innerHTML += `
-            <li data-value="${gameFind}" onclick="selectGameInput(event);">${gameFind}</li>
+            <li class="animation-fadeIn" data-value="${gameFind}" onclick="selectGameInput(event);">${gameFind}</li>
         `;
     });
 }
