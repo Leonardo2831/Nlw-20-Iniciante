@@ -134,6 +134,8 @@ selectGame.addEventListener('click', (event) => {
 window.togglePage = ({target, currentTarget}) => {
 
     if(currentTarget.id == 'morePages'){
+        contentOptionGames.children[0].classList.add(classHidden);
+
         showGames();
     } else {
         const pages = Array.from(target.parentElement.previousElementSibling.children);       
