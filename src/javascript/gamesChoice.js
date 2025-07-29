@@ -138,15 +138,22 @@ function filterGamesInfo(){
 }
 
 function addGameSearch(inputTextFilter){
+    const height = window.innerHeight;
     const fuse = new Fuse(games, { threshold: 0 });
     const resultsSearch = fuse.search(inputTextFilter);
     const gamesFind = resultsSearch.map(result => result.item);
 
     contentOptionGames.innerHTML = '';
-    gamesFind.forEach((gameFind) => {
+    gamesFind.forEach((gameFind, index) => {
         contentOptionGames.innerHTML += `
             <li class="animation-fadeIn" data-value="${gameFind}" onclick="selectGameInput(event);">${gameFind}</li>
         `;
+
+        if(height < 768 && index === 3){
+            return;
+        } else if(index === 5){
+            return;
+        }
     });
 }
 
