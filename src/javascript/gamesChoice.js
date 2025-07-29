@@ -127,45 +127,35 @@ window.togglePage = (event) => {
 }
 
 const inputFilter = selectItem.Single('#filterGames');
-const infoSearch = selectItem.Single('#infoSearch');
-
-function filterGamesInfo(){
-    infoSearch.classList.remove(classHidden);
-
-    if(inputFilter.value === ''){
-        infoSearch.classList.add(classHidden);
-    }
-}
 
 function addGameSearch(inputTextFilter){
     const height = window.innerHeight;
     const fuse = new Fuse(games, { threshold: 0 });
     const resultsSearch = fuse.search(inputTextFilter);
     const gamesFind = resultsSearch.map(result => result.item);
-
+    
+    let i = 0;
     contentOptionGames.innerHTML = '';
-    gamesFind.every((gameFind, index) => {
+    for(let gameFind of gamesFind){
+        i++;
         contentOptionGames.innerHTML += `
-            <li class="animation-fadeIn" data-value="${gameFind}" onclick="selectGameInput(event);">${gameFind}</li>
+            <li class="" data-value="${gameFind}" onclick="selectGameInput(event);">${gameFind}</li>
         `;
 
-        if(height < 768 && index === 3){
+        if(height < 768 && i === 3){
             return;
-        } else if(index === 5){
+        } else if(i === 5){
             return;
         }
-    });
+    }
 }
 
-inputFilter.addEventListener('input', filterGamesInfo);
 inputFilter.addEventListener('input', (event) => {
     event.stopPropagation();
     if(inputFilter.value === '') showGames();
 });
-
-inputFilter.addEventListener('keydown', (event) => {
-    if(event.key == 'Enter'){
-        event.preventDefault();
-        addGameSearch(inputFilter.value);
-    }
+inputFilter.addEventListener('input', (event) => {
+    event.stopPropagation();
+    if(inputFilter.value) addGameSearch(inputFilter.value);
+    else showGames();
 });
