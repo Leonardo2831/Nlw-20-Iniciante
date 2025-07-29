@@ -170,12 +170,12 @@ function addGameSearch(inputTextFilter){
     const termsNameGame = inputTextFilter.toLowerCase().split(' ');
 
     const gamesFind = games.filter((gameFind) => {
-        gameFind.name.toLowerCase().includes(termsNameGame);
+        gameFind.toLowerCase().includes(termsNameGame);
     });
 
     const gamesRemaining = games.filter((gameRemaining) => {
         // pegar os jogos que não batem com a pesquisa
-        !gameRemaining.name.toLowerCase().includes(termsNameGame);
+        !gameRemaining.toLowerCase().includes(termsNameGame);
     });
 
     console.log(gamesRemaining);
@@ -188,14 +188,14 @@ function addGameSearch(inputTextFilter){
         if(contentOptionGames.children[contentOptionGames.children.length - 1].children.length === 5){
             contentOptionGames.innerHTML += `
                 <div id="page${contentOptionGames.children.length + 1}" class="list-games animation-fadeIn hidden">
-                    <li data-value="${gameFind.name}" onclick="selectGameInput(event);">${gameFind.name}</li>
+                    <li data-value="${gameFind}" onclick="selectGameInput(event);">${gameFind}</li>
                 </div>  
             `;
 
             contentListPages.innerHTML += `<li onclick="togglePage(event);">${countPages}</li>`;
         } else {
             contentOptionGames.children[contentOptionGames.children.length - 1].innerHTML += `
-                <li data-value="${gameFind.name}" onclick="selectGameInput(event);">${gameFind.name}</li>
+                <li data-value="${gameFind}" onclick="selectGameInput(event);">${gameFind}</li>
             `;
         }
     });
