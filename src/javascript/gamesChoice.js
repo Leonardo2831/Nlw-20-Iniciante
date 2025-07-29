@@ -178,6 +178,8 @@ function addGameSearch(inputTextFilter){
         !gameRemaining.name.toLowerCase().includes(termsNameGame);
     });
 
+    console.log(gamesRemaining);
+
     games.length = 0;
     games.push(...gamesRemaining);
     console.log(games);
