@@ -23,7 +23,7 @@ async function fetchGemini(){
     submitButton.classList.add('animate-loading');
     
     try {
-        const response = await fetch("https://nlw-20-iniciante-three.vercel.app/api/requestGemini", {
+        const response = await fetch("https://esports-games.vercel.app/api/requestGemini", {
             method: 'POST',
             headers: {
                     "Content-Type": "application/json",
