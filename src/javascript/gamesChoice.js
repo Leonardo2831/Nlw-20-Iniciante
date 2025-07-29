@@ -15,6 +15,10 @@ let countPages = 1;
 let indexGames = 0;
 let games = [];
 
+/**
+ * 
+ * @param {number} indexGamesPage 
+ */
 function showGames(indexGamesPage){
     indexGamesPage ??= 1;
     
@@ -128,6 +132,10 @@ window.togglePage = (event) => {
 
 const inputFilter = selectItem.Single('#filterGames');
 
+/**
+ * 
+ * @param {String} inputTextFilter 
+ */
 function addGameSearch(inputTextFilter){
     const height = window.innerHeight;
     const fuse = new Fuse(games, { threshold: 0 });

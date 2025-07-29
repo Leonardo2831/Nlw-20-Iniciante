@@ -2,7 +2,7 @@ export class Select {
 
     /**
      * Seleciona o primeiro elemento que casa com o seletor.
-     * @param {string} value seletor CSS para selecionar o elemento
+     * @param {String} value seletor CSS para selecionar o elemento
      * @returns {HTMLElement | null}
     */
     Single(className){
@@ -11,7 +11,7 @@ export class Select {
     
     /**
      * Seleciona todos os elementos que casam com o seletor.
-     * @param {string} value seletor CSS para selecionar o elemento
+     * @param {String} value seletor CSS para selecionar o elemento
      * @returns {NodeListOf<HTMLElement>}
     */
     All(className){
