@@ -97,7 +97,7 @@ window.requestGames = async () => {
         const response = await fetch('https://nlw-20-iniciante-three.vercel.app/api/requestGames');
         const gamesResponse = await response.json();
         
-        games = gamesResponse;
+        games = gamesResponse.map(game => game.name);
 
         console.log(games);
     
