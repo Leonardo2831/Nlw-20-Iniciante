@@ -128,7 +128,6 @@ window.togglePage = (event) => {
 
 const inputFilter = selectItem.Single('#filterGames');
 const infoSearch = selectItem.Single('#infoSearch');
-const fuse = new Fuse(games, { threshold: 0.4 });
 
 function filterGamesInfo(){
     infoSearch.classList.remove(classHidden);
@@ -139,7 +138,7 @@ function filterGamesInfo(){
 }
 
 function addGameSearch(inputTextFilter){
-
+    const fuse = new Fuse(games, { threshold: 0 });
     const resultsSearch = fuse.search(inputTextFilter);
     const gamesFind = resultsSearch.map(result => result.item);
 
