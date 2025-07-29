@@ -63,9 +63,8 @@ form.addEventListener('submit', (event) => {
 });
 
 form.addEventListener('keydown', (event) => {
-    event.preventDefault();
-
     if(event.key === 'Enter'){
+        event.preventDefault();
         fetchGemini();
     }
 });
